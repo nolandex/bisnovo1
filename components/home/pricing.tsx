@@ -4,18 +4,14 @@ import type React from "react"
 import { useEffect, useState, useCallback } from "react"
 import { useTheme } from "next-themes"
 import { CheckCircle, ExternalLink, X } from "lucide-react"
-// --- PERUBAHAN 1: Impor 'dynamic' dari Next.js ---
 import dynamic from "next/dynamic"
 
-// --- PERUBAHAN 2: Muat Swiper secara dinamis ---
-// Ini memastikan Swiper hanya di-load di browser, bukan di server
 const Swiper = dynamic(() => import("swiper/react").then((mod) => mod.Swiper), { ssr: false })
 const SwiperSlide = dynamic(() => import("swiper/react").then((mod) => mod.SwiperSlide), { ssr: false })
 
 import "swiper/css"
 
-// ... Sisa kode (Modal, FeatureList, data, dll) tetap sama persis ...
-// Komponen Modal
+// ... (Komponen Modal, FeatureList, OrderingInstructions tetap sama persis)
 interface ModalProps {
 	isOpen: boolean
 	onClose: () => void
@@ -57,7 +53,6 @@ function Modal({ isOpen, onClose, children, size = "full" }: ModalProps) {
 	)
 }
 
-// Komponen FeatureList
 interface FeatureListProps {
 	features: string[]
 	textColor?: string
@@ -81,7 +76,6 @@ function FeatureList({ features, textColor }: FeatureListProps) {
 	)
 }
 
-// Komponen untuk instruksi pemesanan
 function OrderingInstructions() {
 	const { theme } = useTheme()
 	return (
@@ -128,140 +122,62 @@ function OrderingInstructions() {
 }
 
 
+// --- PERUBAHAN DATA PRODUK DAN KATEGORI DI SINI ---
 interface Product {
 	name: string
 	price: string
-	category: string
-	subcategory?: string
+	category: "landing_page" | "portfolio" | "profil_bisnis"
 	features?: string[]
 	exampleUrl?: string
-	modalType?: "example" | "details" | "contentImages" | "videoPromo" | "seoImages" | "adsImages" | null
-}
-
-const getInstagramBoosterFeatures = (option: string) => {
-	switch (option) {
-		case "3000": return ["5000 Likes", "100000 Views"]
-		case "5000": return ["10000 Likes", "170000 Views"]
-		case "10000": return ["15000 Likes", "300000 Views"]
-		default: return []
-	}
-}
-
-const getTikTokBoosterFeatures = (option: string) => {
-	const baseViews = 70000, baseLikes = 5000, baseShares = 700, baseSaves = 700
-	switch (option) {
-		case "2000": return [`${baseViews.toLocaleString()} Views`, `${baseLikes.toLocaleString()} Likes`, `${baseShares.toLocaleString()} Shares`, `${baseSaves.toLocaleString()} Saves`]
-		case "5000": return [`${(baseViews * 2.5).toLocaleString()} Views`, `${(baseLikes * 2.5).toLocaleString()} Likes`, `${(baseShares * 2.5).toLocaleString()} Shares`, `${(baseSaves * 2.5).toLocaleString()} Saves`]
-		default: return []
-	}
-}
-
-const getTelegramBoosterFeatures = (option: string) => {
-	switch (option) {
-		case "3000": return ["10000 Views", "1000 Reactions"]
-		case "5000": return ["15000 Views", "1500 Reactions"]
-		case "10000": return ["30000 Views", "3000 Reactions"]
-		default: return []
-	}
-}
-
-const getFacebookBoosterFeatures = (option: string) => {
-	switch (option) {
-		case "3000": return ["5000 Likes", "100000 Views"]
-		case "5000": return ["10000 Likes", "170000 Views"]
-		case "10000": return ["15000 Likes", "300000 Views"]
-		default: return []
-	}
+	modalType?: "example" | "details"
 }
 
 const productData: Product[] = [
-    { name: "Paket Bisnis", price: "Rp 50,000", category: "paket_bisnis", features: ["Website", "Desain Konten Sosmed", "Booster Sosmed", "Video Promosi", "Copywriting", "SEO On-page"], exampleUrl: "https://example.com", modalType: "details" },
-    { name: "Paket Bisnis Reseller", price: "Rp 25,000", category: "paket_bisnis", features: ["Website", "Desain Konten Sosmed", "Booster Sosmed", "Video Promosi", "Copywriting", "Alat promosi"], exampleUrl: "https://example.com", modalType: "details" },
-    { name: "Instagram Booster", price: "", category: "sosmed_booster", features: [], exampleUrl: "https://example.com/instagram", modalType: "details" },
-    { name: "TikTok Booster", price: "", category: "sosmed_booster", features: [], exampleUrl: "https://example.com/tiktok", modalType: "details" },
-    { name: "Telegram Booster", price: "", category: "sosmed_booster", features: [], exampleUrl: "https://example.com/telegram", modalType: "details" },
-    { name: "Facebook Booster", price: "", category: "sosmed_booster", features: [], exampleUrl: "https://example.com/facebook", modalType: "details" },
-    { name: "Desain Konten", price: "Rp 10,000", category: "lainnya", modalType: "contentImages" },
-    { name: "Video Promosi", price: "Rp 10,000", category: "lainnya", exampleUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", modalType: "videoPromo" },
-    { name: "SEO & Domain Website", price: "Rp 25,000", category: "lainnya", features: ["Riset Kata Kunci", "Optimasi Halaman", "setting dll"], modalType: "seoImages" },
-    { name: "Jasa Iklan Online", price: "Rp 50,000", category: "lainnya", features: ["Meta ads", "Tiktok ads"], modalType: "adsImages" },
-    { name: "Landing Page", price: "Rp 20,000", category: "website", subcategory: "business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://unbounce.com", modalType: "example" },
-    { name: "Profil Bisnis", price: "Rp 20,000", category: "website", subcategory: "business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://profil-bisnis-demo.vercel.app", modalType: "example" },
-    { name: "Simple Store", price: "Rp 20,000", category: "website", subcategory: "business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://shopify.com", modalType: "example" },
-    { name: "Portfolio", price: "Rp 20,000", category: "website", subcategory: "business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://portfolio-demo.vercel.app", modalType: "example" },
-    { name: "Online Course", price: "Rp 20,000", category: "website", subcategory: "business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://course-demo.vercel.app", modalType: "example" },
-    { name: "Membership", price: "Rp 20,000", category: "website", subcategory: "business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://membership-demo.vercel.app", modalType: "example" },
-    { name: "Link in Bio", price: "Rp 20,000", category: "website", subcategory: "business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://linkinbio-demo.vercel.app", modalType: "example" },
-    { name: "Digital Invitation", price: "Rp 20,000", category: "website", subcategory: "non-business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://invitation-demo.vercel.app", modalType: "example" },
-    { name: "Birthday", price: "Rp 20,000", category: "website", subcategory: "non-business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://birthday-demo.vercel.app", modalType: "example" },
-    { name: "Event", price: "Rp 20,000", category: "website", subcategory: "non-business", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://event-demo.vercel.app", modalType: "example" },
+	// Kategori: Landing Page
+	{ name: "Landing Page", price: "Rp 20,000", category: "landing_page", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://unbounce.com", modalType: "example" },
+	{ name: "Simple Store", price: "Rp 20,000", category: "landing_page", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://shopify.com", modalType: "example" },
+	{ name: "Online Course", price: "Rp 20,000", category: "landing_page", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://course-demo.vercel.app", modalType: "example" },
+	{ name: "Membership", price: "Rp 20,000", category: "landing_page", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://membership-demo.vercel.app", modalType: "example" },
+	{ name: "Link in Bio", price: "Rp 20,000", category: "landing_page", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://linkinbio-demo.vercel.app", modalType: "example" },
+	{ name: "Digital Invitation", price: "Rp 20,000", category: "landing_page", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://invitation-demo.vercel.app", modalType: "example" },
+	{ name: "Birthday", price: "Rp 20,000", category: "landing_page", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://birthday-demo.vercel.app", modalType: "example" },
+	{ name: "Event", price: "Rp 20,000", category: "landing_page", features: ["Responsif", "Hosting Gratis"], exampleUrl: "https://event-demo.vercel.app", modalType: "example" },
+
+	// Kategori: Portfolio
+	{ name: "Portfolio", price: "Rp 20,000", category: "portfolio", features: ["Desain Modern", "Hosting Gratis", "Galeri Proyek"], exampleUrl: "https://portfolio-demo.vercel.app", modalType: "example" },
+
+	// Kategori: Profil Bisnis
+	{ name: "Profil Bisnis", price: "Rp 20,000", category: "profil_bisnis", features: ["Desain Profesional", "Hosting Gratis", "Info Kontak"], exampleUrl: "https://profil-bisnis-demo.vercel.app", modalType: "example" },
 ]
 
-const imageSources = {
-	contentImages: ["/images/template1.jpg", "/images/template2.jpg", "/images/template3.jpg"],
-	seoImages: ["/images/seo1.jpg"],
-	adsImages: ["/images/ads1.jpg"],
-}
 
-export default function SecondPage() {
+export default function ServicesPage() {
 	const { theme } = useTheme()
 	const [mounted, setMounted] = useState(false)
-	const [activeCategory, setActiveCategory] = useState("paket_bisnis")
-	const [activeSubcategory, setActiveSubcategory] = useState("business")
+	// State default diubah ke 'landing_page'
+	const [activeCategory, setActiveCategory] = useState<Product["category"]>("landing_page")
 	const [activeModal, setActiveModal] = useState<Product["modalType"]>(null)
 	const [modalProduct, setModalProduct] = useState<Product | null>(null)
 
-	const [instagramBoosterOption, setInstagramBoosterOption] = useState("3000")
-	const [tiktokBoosterOption, setTiktokBoosterOption] = useState("2000")
-	const [telegramBoosterOption, setTelegramBoosterOption] = useState("3000")
-	const [facebookBoosterOption, setFacebookBoosterOption] = useState("3000")
-	const [boosterLink, setBoosterLink] = useState("")
 
 	useEffect(() => {
 		setMounted(true)
 	}, [])
 
-	const getProductDisplayData = useCallback(
-		(product: Product): Product => {
-			let currentPrice = product.price
-			let currentFeatures = product.features || []
 
-			if (product.name === "Instagram Booster") {
-				currentPrice = instagramBoosterOption === "3000" ? "Rp 50,000" : instagramBoosterOption === "5000" ? "Rp 80,000" : "Rp 150,000"
-				currentFeatures = getInstagramBoosterFeatures(instagramBoosterOption)
-			} else if (product.name === "TikTok Booster") {
-				currentPrice = tiktokBoosterOption === "2000" ? "Rp 50,000" : "Rp 100,000"
-				currentFeatures = getTikTokBoosterFeatures(tiktokBoosterOption)
-			} else if (product.name === "Telegram Booster") {
-				currentPrice = telegramBoosterOption === "3000" ? "Rp 50,000" : telegramBoosterOption === "5000" ? "Rp 70,000" : "Rp 140,000"
-				currentFeatures = getTelegramBoosterFeatures(telegramBoosterOption)
-			} else if (product.name === "Facebook Booster") {
-				currentPrice = facebookBoosterOption === "3000" ? "Rp 50,000" : facebookBoosterOption === "5000" ? "Rp 80,000" : "Rp 150,000"
-				currentFeatures = getFacebookBoosterFeatures(facebookBoosterOption)
-			}
-			return { ...product, price: currentPrice, features: currentFeatures }
-		},
-		[instagramBoosterOption, tiktokBoosterOption, telegramBoosterOption, facebookBoosterOption]
-	)
+	const filteredProducts = productData.filter((product) => product.category === activeCategory)
 
-	const filteredProducts = productData.filter((product) => {
-		if (product.category !== activeCategory) return false
-		if (activeCategory === "website") {
-			return product.subcategory === activeSubcategory
-		}
-		return true
-	})
 
 	const openModal = useCallback(
 		(type: Product["modalType"], product?: Product) => {
 			setActiveModal(type)
 			if (product) {
-				setModalProduct(getProductDisplayData(product))
+				setModalProduct(product)
 			} else {
 				setModalProduct(null)
 			}
 		},
-		[getProductDisplayData]
+		[],
 	)
 
 	const closeModal = useCallback(() => {
@@ -284,113 +200,61 @@ export default function SecondPage() {
 	return (
 		<div className='min-h-screen pt-20 pb-8'>
 			<div className='container max-w-4xl mx-auto px-4 sm:px-6'>
-				<div className='grid grid-cols-2 sm:flex sm:flex-row sm:justify-center gap-2 sm:gap-4 mb-6'>
-					<button onClick={() => setActiveCategory("paket_bisnis")} className={getButtonClasses(activeCategory === "paket_bisnis")}>
-						Paket Bisnis
+				{/* --- PERUBAHAN TOMBOL KATEGORI DI SINI --- */}
+				<div className='grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-6'>
+					<button onClick={() => setActiveCategory("landing_page")} className={getButtonClasses(activeCategory === "landing_page")}>
+						Landing Page
 					</button>
-					<button onClick={() => { setActiveCategory("website"); setActiveSubcategory("business") }} className={getButtonClasses(activeCategory === "website")}>
-						Website
+					<button onClick={() => setActiveCategory("portfolio")} className={getButtonClasses(activeCategory === "portfolio")}>
+						Portfolio
 					</button>
-					<button onClick={() => setActiveCategory("sosmed_booster")} className={getButtonClasses(activeCategory === "sosmed_booster")}>
-						Sosmed Booster
-					</button>
-					<button onClick={() => setActiveCategory("lainnya")} className={getButtonClasses(activeCategory === "lainnya")}>
-						Lainnya
+					<button onClick={() => setActiveCategory("profil_bisnis")} className={getButtonClasses(activeCategory === "profil_bisnis")}>
+						Profil Bisnis
 					</button>
 				</div>
 
-				{activeCategory === "website" && (
-					<div className='flex justify-center gap-2 mb-6'>
-						<button onClick={() => setActiveSubcategory("business")} className={getButtonClasses(activeSubcategory === "business")}>
-							Bisnis
-						</button>
-						<button onClick={() => setActiveSubcategory("non-business")} className={getButtonClasses(activeSubcategory === "non-business")}>
-							Non-Bisnis
-						</button>
-					</div>
-				)}
 
 				<div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-					{filteredProducts.map((product) => {
-						const displayProduct = getProductDisplayData(product)
-
-						return (
-							<div key={displayProduct.name + (displayProduct.subcategory || "")} className={`flex flex-col rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${theme === "dark" ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"} p-3`}>
-								<div className='flex justify-between items-start mb-2'>
-									<h3 className={`font-bold leading-tight text-sm ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
-										{displayProduct.name}
-									</h3>
-									<span className={`px-2 py-1 rounded-md font-bold whitespace-nowrap ml-2 text-xs shadow-sm ${displayProduct.price === "Rp 0" ? (theme === "dark" ? "bg-green-600 text-white" : "bg-green-500 text-white") : theme === "dark" ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white" : "bg-gradient-to-r from-blue-500 to-blue-600 text-white"}`}>
-										{displayProduct.price}
-									</span>
-								</div>
-
-								<div className='flex-grow'>
-									{["Instagram Booster", "TikTok Booster", "Telegram Booster", "Facebook Booster"].includes(displayProduct.name) && (
-										<div className='mb-3 space-y-2'>
-											{displayProduct.name === "Instagram Booster" && (
-												<select value={instagramBoosterOption} onChange={(e) => setInstagramBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
-													<option value='3000'>3000 Followers</option>
-													<option value='5000'>5000 Followers</option>
-													<option value='10000'>10000 Followers</option>
-												</select>
-											)}
-											{displayProduct.name === "TikTok Booster" && (
-												<select value={tiktokBoosterOption} onChange={(e) => setTiktokBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
-													<option value='2000'>2000 Followers</option>
-													<option value='5000'>5000 Followers</option>
-												</select>
-											)}
-											{displayProduct.name === "Telegram Booster" && (
-												<select value={telegramBoosterOption} onChange={(e) => setTelegramBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
-													<option value='3000'>3000 Followers</option>
-													<option value='5000'>5000 Followers</option>
-													<option value='10000'>10000 Followers</option>
-												</select>
-											)}
-											{displayProduct.name === "Facebook Booster" && (
-												<select value={facebookBoosterOption} onChange={(e) => setFacebookBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
-													<option value='3000'>3000 Followers</option>
-													<option value='5000'>5000 Followers</option>
-													<option value='10000'>10000 Followers</option>
-												</select>
-											)}
-											<input type='text' value={boosterLink} onChange={(e) => setBoosterLink(e.target.value)} placeholder='Masukkan Link Akun' className={`w-full mt-2 px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200 placeholder-gray-400" : "bg-white border-gray-300 text-gray-700 placeholder-gray-500"} focus:outline-none focus:ring-2 focus:ring-blue-500`}/>
-											{displayProduct.features &&
-												displayProduct.features.length > 0 && (
-													<div className='mt-1'>
-														<FeatureList features={displayProduct.features} />
-													</div>
-												)}
-										</div>
-									)}
-									{displayProduct.name !== "Instagram Booster" && displayProduct.name !== "TikTok Booster" && displayProduct.name !== "Telegram Booster" && displayProduct.name !== "Facebook Booster" && displayProduct.features && displayProduct.features.length > 0 && (
-										<div className='mb-3'>
-											<FeatureList features={displayProduct.features} />
-										</div>
-									)}
-								</div>
-								<div className='flex gap-2 mt-auto'>
-									<button className={`flex-1 py-1.5 px-3 rounded-md font-medium text-xs transition-all duration-300 shadow-sm hover:shadow-md ${theme === "dark" ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white" : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"}`}>
-										Bayar
-									</button>
-									{displayProduct.modalType && (displayProduct.exampleUrl || imageSources[displayProduct.modalType as keyof typeof imageSources]?.length > 0 || displayProduct.modalType === "details") && (
-										<button onClick={() => openModal(displayProduct.modalType, displayProduct)} className={`px-2 py-1.5 rounded-md font-medium text-xs transition-all duration-300 border flex items-center gap-1 shadow-sm hover:shadow-md ${theme === "dark" ? "border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500" : "border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"}`}>
-											{displayProduct.modalType === "example" ? (
-												<>
-													<ExternalLink className='h-3 w-3' /> Contoh
-												</>
-											) : (
-												"Rincian"
-											)}
-										</button>
-									)}
-								</div>
+					{filteredProducts.map((product) => (
+						<div key={product.name} className={`flex flex-col rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${theme === "dark" ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"} p-3`}>
+							<div className='flex justify-between items-start mb-2'>
+								<h3 className={`font-bold leading-tight text-sm ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+									{product.name}
+								</h3>
+								<span className={`px-2 py-1 rounded-md font-bold whitespace-nowrap ml-2 text-xs shadow-sm ${theme === "dark" ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white" : "bg-gradient-to-r from-blue-500 to-blue-600 text-white"}`}>
+									{product.price}
+								</span>
 							</div>
-						)
-					})}
+
+							<div className='flex-grow'>
+								{product.features && product.features.length > 0 && (
+									<div className='mb-3'>
+										<FeatureList features={product.features} />
+									</div>
+								)}
+							</div>
+
+							<div className='flex gap-2 mt-auto'>
+								<button className={`flex-1 py-1.5 px-3 rounded-md font-medium text-xs transition-all duration-300 shadow-sm hover:shadow-md ${theme === "dark" ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white" : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"}`}>
+									Bayar
+								</button>
+								{product.modalType && (
+									<button onClick={() => openModal(product.modalType, product)} className={`px-2 py-1.5 rounded-md font-medium text-xs transition-all duration-300 border flex items-center gap-1 shadow-sm hover:shadow-md ${theme === "dark" ? "border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500" : "border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"}`}>
+										{product.modalType === "example" ? (
+											<>
+												<ExternalLink className='h-3 w-3' /> Contoh
+											</>
+										) : (
+											"Rincian"
+										)}
+									</button>
+								)}
+							</div>
+						</div>
+					))}
 				</div>
 
+                {/* ... (Kode Modal tetap sama persis) ... */}
 				<Modal isOpen={activeModal === "example" && modalProduct !== null} onClose={closeModal} size='full'>
 					{modalProduct?.exampleUrl && (
 						<iframe src={modalProduct.exampleUrl} title={`Contoh ${modalProduct.name}`} className='w-full h-full border-0' sandbox='allow-scripts allow-same-origin allow-forms allow-popups'/>
@@ -400,49 +264,7 @@ export default function SecondPage() {
 				<Modal isOpen={activeModal === "details" && modalProduct !== null} onClose={closeModal} size='md'>
 					<OrderingInstructions />
 				</Modal>
-                
-                {/* Di dalam render() dari komponen SecondPage */}
-                <Modal
-                    isOpen={
-                        (activeModal === "contentImages" && modalProduct?.name === "Desain Konten") ||
-                        (activeModal === "seoImages" && modalProduct?.name === "SEO & Domain Website") || // Nama diperbaiki
-                        (activeModal === "adsImages" && modalProduct?.name === "Jasa Iklan Online")
-                    }
-                    onClose={closeModal}
-                    size="lg"
-                >
-                    <Swiper spaceBetween={10} slidesPerView={1} className="w-full h-64 md:h-96">
-                        {modalProduct &&
-                            imageSources[modalProduct.modalType as keyof typeof imageSources]?.map(
-                                (img, i) => (
-                                    <SwiperSlide key={i}>
-                                        <div className="relative w-full h-full">
-                                            <img
-                                                src={img || "/placeholder.svg"}
-                                                alt={`${modalProduct.name} Contoh ${i + 1}`}
-                                                className="w-full h-full object-contain rounded-md"
-                                            />
-                                            <span
-                                                className={`absolute top-2 left-2 px-2 py-1 text-xs md:text-sm font-medium text-white bg-black bg-opacity-60 rounded`}
-                                            >
-                                                Gambar {i + 1}
-                                            </span>
-                                        </div>
-                                    </SwiperSlide>
-                                )
-                            )}
-                    </Swiper>
-                </Modal>
-
-				<Modal isOpen={activeModal === "videoPromo" && modalProduct?.name === "Video Promosi"} onClose={closeModal} size='lg'>
-					{modalProduct?.exampleUrl && (
-						<div className='aspect-video w-full'>
-							<iframe src={modalProduct.exampleUrl} title={`Contoh ${modalProduct.name}`} className='w-full h-full rounded-md' frameBorder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowFullScreen/>
-						</div>
-					)}
-				</Modal>
 			</div>
 		</div>
 	)
 }
-
