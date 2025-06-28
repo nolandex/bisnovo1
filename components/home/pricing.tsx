@@ -7,6 +7,7 @@ import { CheckCircle, ExternalLink, X } from "lucide-react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 
+// ... (Kode untuk Modal, FeatureList, OrderingInstructions tetap sama) ...
 // Komponen Modal
 interface ModalProps {
 	isOpen: boolean
@@ -118,6 +119,7 @@ function OrderingInstructions() {
 		</div>
 	)
 }
+
 
 interface Product {
 	name: string
@@ -242,11 +244,13 @@ export default function SecondPage() {
 		}
 		return true
 	})
-
-	const groupedProducts: Product[][] = []
-	for (let i = 0; i < filteredProducts.length; i += 2) {
-		groupedProducts.push(filteredProducts.slice(i, i + 2))
-	}
+    
+    // --- PERUBAHAN LOGIKA PENGELOMPOKAN DIHAPUS ---
+	// Tidak perlu lagi mengelompokkan produk menjadi 2 per baris
+	// const groupedProducts: Product[][] = []
+	// for (let i = 0; i < filteredProducts.length; i += 2) {
+	// 	groupedProducts.push(filteredProducts.slice(i, i + 2))
+	// }
 
 	const openModal = useCallback(
 		(type: Product["modalType"], product?: Product) => {
@@ -278,8 +282,6 @@ export default function SecondPage() {
 	if (!mounted) return null
 
 	return (
-        // --- PERUBAHAN DI SINI ---
-        // Kelas bg-gray-900 dan bg-gray-50 dihapus agar background menjadi transparan
 		<div className='min-h-screen pt-20 pb-8'>
 			<div className='container max-w-4xl mx-auto px-4 sm:px-6'>
 				<div className='grid grid-cols-2 sm:flex sm:flex-row sm:justify-center gap-2 sm:gap-4 mb-6'>
@@ -308,89 +310,86 @@ export default function SecondPage() {
 					</div>
 				)}
 
-				<div className='space-y-3 sm:space-y-4'>
-					{groupedProducts.map((group, groupIndex) => (
-						<div key={groupIndex} className='grid grid-cols-2 gap-3 sm:gap-4'>
-							{group.map((product) => {
-								const displayProduct = getProductDisplayData(product)
+                {/* --- PERBAIKAN GRID DI SINI --- */}
+				<div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+					{filteredProducts.map((product) => {
+						const displayProduct = getProductDisplayData(product)
 
-								return (
-									<div key={displayProduct.name + (displayProduct.subcategory || "")} className={`flex flex-col rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${theme === "dark" ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"} p-3`}>
-										<div className='flex justify-between items-start mb-2'>
-											<h3 className={`font-bold leading-tight text-sm ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
-												{displayProduct.name}
-											</h3>
-											<span className={`px-2 py-1 rounded-md font-bold whitespace-nowrap ml-2 text-xs shadow-sm ${displayProduct.price === "Rp 0" ? (theme === "dark" ? "bg-green-600 text-white" : "bg-green-500 text-white") : theme === "dark" ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white" : "bg-gradient-to-r from-blue-500 to-blue-600 text-white"}`}>
-												{displayProduct.price}
-											</span>
-										</div>
+						return (
+							<div key={displayProduct.name + (displayProduct.subcategory || "")} className={`flex flex-col rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${theme === "dark" ? "bg-gray-800 border border-gray-700" : "bg-white border-gray-200"} p-3`}>
+								<div className='flex justify-between items-start mb-2'>
+									<h3 className={`font-bold leading-tight text-sm ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+										{displayProduct.name}
+									</h3>
+									<span className={`px-2 py-1 rounded-md font-bold whitespace-nowrap ml-2 text-xs shadow-sm ${displayProduct.price === "Rp 0" ? (theme === "dark" ? "bg-green-600 text-white" : "bg-green-500 text-white") : theme === "dark" ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white" : "bg-gradient-to-r from-blue-500 to-blue-600 text-white"}`}>
+										{displayProduct.price}
+									</span>
+								</div>
 
-										<div className='flex-grow'>
-											{["Instagram Booster", "TikTok Booster", "Telegram Booster", "Facebook Booster"].includes(displayProduct.name) && (
-												<div className='mb-3 space-y-2'>
-													{displayProduct.name === "Instagram Booster" && (
-														<select value={instagramBoosterOption} onChange={(e) => setInstagramBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
-															<option value='3000'>3000 Followers</option>
-															<option value='5000'>5000 Followers</option>
-															<option value='10000'>10000 Followers</option>
-														</select>
-													)}
-													{displayProduct.name === "TikTok Booster" && (
-														<select value={tiktokBoosterOption} onChange={(e) => setTiktokBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
-															<option value='2000'>2000 Followers</option>
-															<option value='5000'>5000 Followers</option>
-														</select>
-													)}
-													{displayProduct.name === "Telegram Booster" && (
-														<select value={telegramBoosterOption} onChange={(e) => setTelegramBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
-															<option value='3000'>3000 Followers</option>
-															<option value='5000'>5000 Followers</option>
-															<option value='10000'>10000 Followers</option>
-														</select>
-													)}
-													{displayProduct.name === "Facebook Booster" && (
-														<select value={facebookBoosterOption} onChange={(e) => setFacebookBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
-															<option value='3000'>3000 Followers</option>
-															<option value='5000'>5000 Followers</option>
-															<option value='10000'>10000 Followers</option>
-														</select>
-													)}
-													<input type='text' value={boosterLink} onChange={(e) => setBoosterLink(e.target.value)} placeholder='Masukkan Link Akun' className={`w-full mt-2 px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200 placeholder-gray-400" : "bg-white border-gray-300 text-gray-700 placeholder-gray-500"} focus:outline-none focus:ring-2 focus:ring-blue-500`}/>
-													{displayProduct.features &&
-														displayProduct.features.length > 0 && (
-															<div className='mt-1'>
-																<FeatureList features={displayProduct.features} />
-															</div>
-														)}
-												</div>
+								<div className='flex-grow'>
+									{["Instagram Booster", "TikTok Booster", "Telegram Booster", "Facebook Booster"].includes(displayProduct.name) && (
+										<div className='mb-3 space-y-2'>
+											{displayProduct.name === "Instagram Booster" && (
+												<select value={instagramBoosterOption} onChange={(e) => setInstagramBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
+													<option value='3000'>3000 Followers</option>
+													<option value='5000'>5000 Followers</option>
+													<option value='10000'>10000 Followers</option>
+												</select>
 											)}
-											{displayProduct.name !== "Instagram Booster" && displayProduct.name !== "TikTok Booster" && displayProduct.name !== "Telegram Booster" && displayProduct.name !== "Facebook Booster" && displayProduct.features && displayProduct.features.length > 0 && (
-												<div className='mb-3'>
-													<FeatureList features={displayProduct.features} />
-												</div>
+											{displayProduct.name === "TikTok Booster" && (
+												<select value={tiktokBoosterOption} onChange={(e) => setTiktokBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
+													<option value='2000'>2000 Followers</option>
+													<option value='5000'>5000 Followers</option>
+												</select>
 											)}
+											{displayProduct.name === "Telegram Booster" && (
+												<select value={telegramBoosterOption} onChange={(e) => setTelegramBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
+													<option value='3000'>3000 Followers</option>
+													<option value='5000'>5000 Followers</option>
+													<option value='10000'>10000 Followers</option>
+												</select>
+											)}
+											{displayProduct.name === "Facebook Booster" && (
+												<select value={facebookBoosterOption} onChange={(e) => setFacebookBoosterOption(e.target.value)} className={`w-full px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200" : "bg-white border-gray-300 text-gray-700"} focus:outline-none focus:ring-2 focus:ring-blue-500`}>
+													<option value='3000'>3000 Followers</option>
+													<option value='5000'>5000 Followers</option>
+													<option value='10000'>10000 Followers</option>
+												</select>
+											)}
+											<input type='text' value={boosterLink} onChange={(e) => setBoosterLink(e.target.value)} placeholder='Masukkan Link Akun' className={`w-full mt-2 px-2 py-1.5 rounded-md text-xs border ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-200 placeholder-gray-400" : "bg-white border-gray-300 text-gray-700 placeholder-gray-500"} focus:outline-none focus:ring-2 focus:ring-blue-500`}/>
+											{displayProduct.features &&
+												displayProduct.features.length > 0 && (
+													<div className='mt-1'>
+														<FeatureList features={displayProduct.features} />
+													</div>
+												)}
 										</div>
-										<div className='flex gap-2 mt-auto'>
-											<button className={`flex-1 py-1.5 px-3 rounded-md font-medium text-xs transition-all duration-300 shadow-sm hover:shadow-md ${theme === "dark" ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white" : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"}`}>
-												Bayar
-											</button>
-											{displayProduct.modalType && (displayProduct.exampleUrl || imageSources[displayProduct.modalType as keyof typeof imageSources]?.length > 0 || displayProduct.modalType === "details") && (
-												<button onClick={() => openModal(displayProduct.modalType, displayProduct)} className={`px-2 py-1.5 rounded-md font-medium text-xs transition-all duration-300 border flex items-center gap-1 shadow-sm hover:shadow-md ${theme === "dark" ? "border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500" : "border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"}`}>
-													{displayProduct.modalType === "example" ? (
-														<>
-															<ExternalLink className='h-3 w-3' /> Contoh
-														</>
-													) : (
-														"Rincian"
-													)}
-												</button>
-											)}
+									)}
+									{displayProduct.name !== "Instagram Booster" && displayProduct.name !== "TikTok Booster" && displayProduct.name !== "Telegram Booster" && displayProduct.name !== "Facebook Booster" && displayProduct.features && displayProduct.features.length > 0 && (
+										<div className='mb-3'>
+											<FeatureList features={displayProduct.features} />
 										</div>
-									</div>
-								)
-							})}
-						</div>
-					))}
+									)}
+								</div>
+								<div className='flex gap-2 mt-auto'>
+									<button className={`flex-1 py-1.5 px-3 rounded-md font-medium text-xs transition-all duration-300 shadow-sm hover:shadow-md ${theme === "dark" ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white" : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"}`}>
+										Bayar
+									</button>
+									{displayProduct.modalType && (displayProduct.exampleUrl || imageSources[displayProduct.modalType as keyof typeof imageSources]?.length > 0 || displayProduct.modalType === "details") && (
+										<button onClick={() => openModal(displayProduct.modalType, displayProduct)} className={`px-2 py-1.5 rounded-md font-medium text-xs transition-all duration-300 border flex items-center gap-1 shadow-sm hover:shadow-md ${theme === "dark" ? "border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500" : "border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"}`}>
+											{displayProduct.modalType === "example" ? (
+												<>
+													<ExternalLink className='h-3 w-3' /> Contoh
+												</>
+											) : (
+												"Rincian"
+											)}
+										</button>
+									)}
+								</div>
+							</div>
+						)
+					})}
 				</div>
 
 				<Modal isOpen={activeModal === "example" && modalProduct !== null} onClose={closeModal} size='full'>
@@ -403,7 +402,7 @@ export default function SecondPage() {
 					<OrderingInstructions />
 				</Modal>
 
-				<Modal isOpen={(activeModal === "contentImages" && modalProduct?.name === "Desain Konten") || (activeModal === "seoImages" && modalProduct?.name === "SEO Website") || (activeModal === "adsImages" && modalProduct?.name === "Jasa Iklan Online")} onClose={closeModal} size='lg'>
+				<Modal isOpen={(activeModal === "contentImages" && modalProduct?.name === "Desain Konten") || (activeModal === "seoImages" && modalProduct?.name === "SEO Website") || (active-modal === "adsImages" && modalProduct?.name === "Jasa Iklan Online")} onClose={closeModal} size='lg'>
 					<Swiper spaceBetween={10} slidesPerView={1} className='w-full h-64 md:h-96'>
 						{modalProduct &&
 							imageSources[modalProduct.modalType as keyof typeof imageSources]?.map(
