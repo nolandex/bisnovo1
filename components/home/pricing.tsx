@@ -4,10 +4,17 @@ import type React from "react"
 import { useEffect, useState, useCallback } from "react"
 import { useTheme } from "next-themes"
 import { CheckCircle, ExternalLink, X } from "lucide-react"
-import { Swiper, SwiperSlide } from "swiper/react"
+// --- PERUBAHAN 1: Impor 'dynamic' dari Next.js ---
+import dynamic from "next/dynamic"
+
+// --- PERUBAHAN 2: Muat Swiper secara dinamis ---
+// Ini memastikan Swiper hanya di-load di browser, bukan di server
+const Swiper = dynamic(() => import("swiper/react").then((mod) => mod.Swiper), { ssr: false })
+const SwiperSlide = dynamic(() => import("swiper/react").then((mod) => mod.SwiperSlide), { ssr: false })
+
 import "swiper/css"
 
-// ... (Kode untuk Modal, FeatureList, OrderingInstructions tetap sama) ...
+// ... Sisa kode (Modal, FeatureList, data, dll) tetap sama persis ...
 // Komponen Modal
 interface ModalProps {
 	isOpen: boolean
@@ -244,13 +251,6 @@ export default function SecondPage() {
 		}
 		return true
 	})
-    
-    // --- PERUBAHAN LOGIKA PENGELOMPOKAN DIHAPUS ---
-	// Tidak perlu lagi mengelompokkan produk menjadi 2 per baris
-	// const groupedProducts: Product[][] = []
-	// for (let i = 0; i < filteredProducts.length; i += 2) {
-	// 	groupedProducts.push(filteredProducts.slice(i, i + 2))
-	// }
 
 	const openModal = useCallback(
 		(type: Product["modalType"], product?: Product) => {
@@ -310,13 +310,12 @@ export default function SecondPage() {
 					</div>
 				)}
 
-                {/* --- PERBAIKAN GRID DI SINI --- */}
 				<div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
 					{filteredProducts.map((product) => {
 						const displayProduct = getProductDisplayData(product)
 
 						return (
-							<div key={displayProduct.name + (displayProduct.subcategory || "")} className={`flex flex-col rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${theme === "dark" ? "bg-gray-800 border border-gray-700" : "bg-white border-gray-200"} p-3`}>
+							<div key={displayProduct.name + (displayProduct.subcategory || "")} className={`flex flex-col rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${theme === "dark" ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"} p-3`}>
 								<div className='flex justify-between items-start mb-2'>
 									<h3 className={`font-bold leading-tight text-sm ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
 										{displayProduct.name}
@@ -401,24 +400,39 @@ export default function SecondPage() {
 				<Modal isOpen={activeModal === "details" && modalProduct !== null} onClose={closeModal} size='md'>
 					<OrderingInstructions />
 				</Modal>
-
-				<Modal isOpen={(activeModal === "contentImages" && modalProduct?.name === "Desain Konten") || (activeModal === "seoImages" && modalProduct?.name === "SEO Website") || (active-modal === "adsImages" && modalProduct?.name === "Jasa Iklan Online")} onClose={closeModal} size='lg'>
-					<Swiper spaceBetween={10} slidesPerView={1} className='w-full h-64 md:h-96'>
-						{modalProduct &&
-							imageSources[modalProduct.modalType as keyof typeof imageSources]?.map(
-								(img, i) => (
-									<SwiperSlide key={i}>
-										<div className='relative w-full h-full'>
-											<img src={img || "/placeholder.svg"} alt={`${modalProduct.name} Contoh ${i + 1}`} className='w-full h-full object-contain rounded-md'/>
-											<span className={`absolute top-2 left-2 px-2 py-1 text-xs md:text-sm font-medium text-white bg-black bg-opacity-60 rounded`}>
-												Gambar {i + 1}
-											</span>
-										</div>
-									</SwiperSlide>
-								)
-							)}
-					</Swiper>
-				</Modal>
+                
+                {/* Di dalam render() dari komponen SecondPage */}
+                <Modal
+                    isOpen={
+                        (activeModal === "contentImages" && modalProduct?.name === "Desain Konten") ||
+                        (activeModal === "seoImages" && modalProduct?.name === "SEO & Domain Website") || // Nama diperbaiki
+                        (activeModal === "adsImages" && modalProduct?.name === "Jasa Iklan Online")
+                    }
+                    onClose={closeModal}
+                    size="lg"
+                >
+                    <Swiper spaceBetween={10} slidesPerView={1} className="w-full h-64 md:h-96">
+                        {modalProduct &&
+                            imageSources[modalProduct.modalType as keyof typeof imageSources]?.map(
+                                (img, i) => (
+                                    <SwiperSlide key={i}>
+                                        <div className="relative w-full h-full">
+                                            <img
+                                                src={img || "/placeholder.svg"}
+                                                alt={`${modalProduct.name} Contoh ${i + 1}`}
+                                                className="w-full h-full object-contain rounded-md"
+                                            />
+                                            <span
+                                                className={`absolute top-2 left-2 px-2 py-1 text-xs md:text-sm font-medium text-white bg-black bg-opacity-60 rounded`}
+                                            >
+                                                Gambar {i + 1}
+                                            </span>
+                                        </div>
+                                    </SwiperSlide>
+                                )
+                            )}
+                    </Swiper>
+                </Modal>
 
 				<Modal isOpen={activeModal === "videoPromo" && modalProduct?.name === "Video Promosi"} onClose={closeModal} size='lg'>
 					{modalProduct?.exampleUrl && (
@@ -431,3 +445,4 @@ export default function SecondPage() {
 		</div>
 	)
 }
+
