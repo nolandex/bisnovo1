@@ -25,10 +25,8 @@ export default function Navbar() {
 				setLangName(pathname.split('/')[1]);
 			}
 			
-			// Ambil daftar link asli
 			let originalLinks = NavLinksList[`LINK_${langName.toUpperCase()}`] || [];
 
-			// Ganti nama 'Blog' menjadi 'Kontak'
 			let modifiedLinks = originalLinks.map(link => {
 				if (link.name.toLowerCase() === 'blog') {
 					return { ...link, name: 'Kontak' };
@@ -36,8 +34,8 @@ export default function Navbar() {
 				return link;
 			});
 			
-			// Hapus link 'FAQ', 'Testimoni', dan 'Feature'
-			const linksToRemove = ['faq', 'testimonials', 'features'];
+			const linksToRemove = ['faq', 'testimoni', 'feature']; 
+			
 			let filteredLinks = modifiedLinks.filter(link => 
 				!linksToRemove.includes(link.name.toLowerCase())
 			);
@@ -63,15 +61,16 @@ export default function Navbar() {
 
 
 	return (
-		<header className='w-full relative z-50 bg-base-100 p-5 pb-0 container mx-auto md:mb-5 flex justify-between items-center'>
+		// --- PERBAIKAN DI SINI ---
+		// Padding vertikal (py) dan margin bottom (mb) dihilangkan/dikurangi
+		<header className='w-full relative z-50 bg-base-100 px-5 container mx-auto flex justify-between items-center'>
 			{/* Logo dan Nama Brand */}
 			<a
 				aria-label='brand logo'
-				className='flex items-center' // Dihapus: w-1/2 md:w-1/5
+				className='flex items-center'
 				title='brand logo'
 				href={`/${langName}`}
 			>
-				{/* Ikon dihapus, hanya teks */}
 				<h2 className='font-bold text-2xl'>Bisnovo</h2>
 			</a>
 
@@ -94,7 +93,6 @@ export default function Navbar() {
 
 			{/* Tombol Aksi dan Menu Mobile */}
 			<div className='flex items-center justify-end gap-2'>
-				{/* Ikon GitHub Dihapus */}
 				<ThemeToggle />
 				<LangSwitch />
 				<div ref={dropdownRef} className='flex md:hidden relative'>
