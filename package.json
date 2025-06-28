@@ -14,15 +14,15 @@
     "@tailwindcss/typography": "^0.5.15",
     "framer-motion": "^11.2.12",
     "html-react-parser": "^5.1.18",
-    "lucide-react": "^0.400.0",    // <-- AKAN DITAMBAHKAN
+    "lucide-react": "^0.400.0",
     "negotiator": "^0.6.3",
     "next": "14.2.4",
     "next-sitemap": "^4.2.3",
-    "next-themes": "^0.3.0",       // <-- AKAN DITAMBAHKAN
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
-    "swiper": "^11.1.4"            // <-- AKAN DITAMBAHKAN
+    "swiper": "^11.1.4"
   },
   "devDependencies": {
     "daisyui": "^4.11.1",
