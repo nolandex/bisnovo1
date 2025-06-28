@@ -16,12 +16,13 @@ export default async function Home({ params }) {
 				locale={dict.Hero}
 				CTALocale={dict.CTAButton}
 			/>
-			<Feature
-				locale={dict.Feature}
-				langName={langName}
-			/>
+			{/* Posisi Pricing dan Feature telah ditukar */}
 			<Pricing
 				locale={dict.Pricing}
+				langName={langName}
+			/>
+			<Feature
+				locale={dict.Feature}
 				langName={langName}
 			/>
 			<Testimonial
