@@ -1,8 +1,8 @@
 'use client';
 import Image from 'next/image';
-import { MdMenu } from 'react-icons/md';
+import { MdMenu, MdClose } from 'react-icons/md'; // Impor ikon Close
 import { SiGithub } from 'react-icons/si';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react'; // Impor useRef
 import ThemeToggle from './themeToggle';
 import LangSwitch from './langSwitch';
 
@@ -14,6 +14,10 @@ export default function Navbar() {
 	const pathname = usePathname();
 	const [langName, setLangName] = useState(defaultLocale);
 	const [linkList, setLinkList] = useState([]);
+	
+	// 1. State untuk mengontrol visibilitas menu mobile
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const dropdownRef = useRef(null); // Ref untuk dropdown menu
 
 	useEffect(() => {
 		const fetchLinksList = async () => {
@@ -26,6 +30,22 @@ export default function Navbar() {
 		};
 		fetchLinksList();
 	}, [pathname, langName]);
+
+	// 2. useEffect untuk menutup menu saat klik di luar area menu
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+				setIsMenuOpen(false);
+			}
+		};
+		// Tambahkan event listener saat komponen dimuat
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			// Hapus event listener saat komponen dibongkar
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [dropdownRef]);
+
 
 	return (
 		<header className='w-full relative z-50 bg-base-100 p-5 pb-0 container mx-auto md:mb-5 flex justify-between items-center'>
@@ -78,26 +98,39 @@ export default function Navbar() {
 				</label>
 				<ThemeToggle />
 				<LangSwitch />
-				<details className='flex md:hidden dropdown dropdown-end'>
-					<summary className='btn btn-ghost p-0'>
-						<MdMenu size={18} />
-					</summary>
-					<ul className='menu dropdown-content z-[100] p-2 shadow bg-base-100 opacity-100 rounded-box w-52'>
-						{linkList.map((link, index) => {
-							return (
-								<li key={index}>
-									<a
-										aria-label={link.name}
-										title={link.name}
-										href={`/${langName}${link.url}`}
-									>
-										{link.name}
-									</a>
-								</li>
-							);
-						})}
-					</ul>
-				</details>
+
+				{/* 3. Modifikasi Menu Hamburger */}
+				<div ref={dropdownRef} className='flex md:hidden relative'>
+					<button
+						className='btn btn-ghost p-0'
+						aria-label='toggle menu'
+						onClick={() => setIsMenuOpen(!isMenuOpen)} // Toggle state saat tombol diklik
+					>
+						{/* Ganti ikon berdasarkan state */}
+						{isMenuOpen ? <MdClose size={20} /> : <MdMenu size={18} />}
+					</button>
+
+					{/* Tampilkan menu jika isMenuOpen bernilai true */}
+					{isMenuOpen && (
+						<ul className='menu absolute top-full right-0 mt-2 z-[100] p-2 shadow bg-base-100 rounded-box w-52'>
+							{linkList.map((link, index) => {
+								return (
+									<li key={index}>
+										<a
+											aria-label={link.name}
+											title={link.name}
+											href={`/${langName}${link.url}`}
+											onClick={() => setIsMenuOpen(false)} // 4. Tutup menu saat link diklik
+										>
+											{link.name}
+										</a>
+									</li>
+								);
+							})}
+						</ul>
+					)}
+				</div>
+
 			</div>
 		</header>
 	);
