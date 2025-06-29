@@ -23,27 +23,32 @@ function Modal({ isOpen, onClose, children, size = "full" }: ModalProps) {
   const { theme } = useTheme();
   if (!isOpen) return null;
 
+  // Ukuran 'full' diatur ke 90vh dan menempel di bawah (mobile) atau tengah (desktop)
   const sizeClasses = {
-    sm: "max-w-sm",
-    md: "max-w-md",
-    lg: "max-w-2xl",
-    full: "max-w-full w-full h-[90vh]",
+    sm: "max-w-sm rounded-xl",
+    md: "max-w-md rounded-xl",
+    lg: "max-w-2xl rounded-xl",
+    full: "max-w-full w-full h-[90vh] rounded-t-2xl md:rounded-xl",
   }[size];
+  
+  // Menghilangkan padding di dalam modal saat ukurannya 'full'
+  const contentPadding = size === 'full' ? 'p-0' : 'p-4';
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    // Container diubah untuk menempelkan modal di bawah (items-end) pada mobile
+    <div className={`fixed inset-0 bg-black bg-opacity-50 flex justify-center z-50 items-end md:items-center`}>
       <div
         className={`${sizeClasses} ${
           theme === "dark" ? "bg-gray-800" : "bg-white"
-        } rounded-xl overflow-hidden shadow-2xl relative p-4`}
+        } overflow-hidden shadow-2xl relative ${contentPadding}`}
       >
         <button
           onClick={onClose}
-          className={`absolute top-4 right-4 p-3 rounded-md transition-all duration-200 z-10 ${
-            theme === "dark"
-              ? "hover:bg-gray-700 text-gray-400 hover:text-white"
-              : "hover:bg-gray-200 text-gray-600 hover:text-gray-900"
-          }`}
+          className={`absolute top-4 right-4 p-2 rounded-full transition-all duration-200 z-10 bg-black/20 hover:bg-black/40
+            ${theme === "dark"
+              ? "text-gray-300 hover:text-white"
+              : "text-gray-200 hover:text-white"
+            }`}
         >
           <X className="h-5 w-5" />
         </button>
@@ -155,42 +160,22 @@ export default function ServicesPage() {
       (activeSubCategory === "all" || product.category === activeSubCategory)
   );
 
-  const openModal = useCallback(
-    (type: Product["modalType"], product?: Product) => {
-      setActiveModal(type);
-      if (product) {
-        setModalProduct(product);
-      } else {
-        setModalProduct(null);
-      }
-    },
-    [],
-  );
+  const openModal = useCallback((type: Product["modalType"], product?: Product) => {
+    setActiveModal(type);
+    setModalProduct(product || null);
+  }, []);
 
   const closeModal = useCallback(() => {
     setActiveModal(null);
     setModalProduct(null);
   }, []);
 
-  const getButtonClasses = (isActive: boolean) => {
-    return `btn btn-sm md:btn-md btn-base rounded-full whitespace-nowrap px-4 py-2 transition-all duration-300 ${
-      isActive
-        ? "border-none ring-1 ring-base-content/50 text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 shadow-md"
-        : "border border-base-content/20 text-base-content hover:bg-base-100/50 hover:shadow-sm"
-    }`;
-  };
-  
+  const getButtonClasses = (isActive: boolean) => `btn btn-sm md:btn-md btn-base rounded-full whitespace-nowrap px-4 py-2 transition-all duration-300 ${isActive ? "border-none ring-1 ring-base-content/50 text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 shadow-md" : "border border-base-content/20 text-base-content hover:bg-base-100/50 hover:shadow-sm"}`;
 
   if (!mounted) return null;
 
   return (
     <div className="min-h-screen w-full pt-20 pb-8">
-       {/* ===============================================================
-         PERUBAHAN DI SINI:
-         Class "px-2 md:px-4" telah dihapus dari div di bawah ini
-         untuk menghilangkan padding kanan dan kiri.
-         ===============================================================
-       */}
       <div className="w-full">
         <div className="flex justify-center overflow-x-auto space-x-3 mb-4 pb-2 snap-x snap-mandatory px-2">
           <button
@@ -225,7 +210,7 @@ export default function ServicesPage() {
           ))}
         </div>
         
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 px-1">
           {filteredProducts.map((product) => (
             <div
               key={product.name}
@@ -234,46 +219,29 @@ export default function ServicesPage() {
               } p-3`}
             >
               <div className="flex justify-between items-start mb-2">
-                <h3
-                  className={`font-bold leading-tight text-sm ${
-                    theme === "dark" ? "text-white" : "text-gray-900"
-                  }`}
-                >
-                  {product.name}
-                </h3>
-                <span
-                  className={`px-2 py-1 rounded-full font-bold whitespace-nowrap ml-2 text-xs shadow-sm border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100`}
-                >
-                  {product.price}
-                </span>
+                <h3 className={`font-bold leading-tight text-sm ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{product.name}</h3>
+                <span className={`px-2 py-1 rounded-full font-bold whitespace-nowrap ml-2 text-xs shadow-sm border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100`}>{product.price}</span>
               </div>
 
               <div className="flex-grow mb-3">
                 {product.imageUrl && (
-                  <div className="relative w-full h-32">
-                    <Image
-                      src={product.imageUrl}
-                      alt={`${product.name} preview`}
-                      fill
-                      className="object-cover rounded-md"
-                    />
-                  </div>
+                  <div className="relative w-full h-32"><Image src={product.imageUrl} alt={`${product.name} preview`} fill className="object-cover rounded-md"/></div>
                 )}
               </div>
-
-              <div className="flex gap-2 mt-auto">
+              
+              <div className="flex gap-2 mt-auto items-center">
                 <button
-                  className={`flex-1 btn btn-sm md:btn-md btn-base border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 rounded-full`}
+                  className={`flex-1 btn btn-sm h-9 border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 rounded-full`}
                 >
                   Bayar
                 </button>
                 {product.modalType && (
                   <button
                     onClick={() => openModal(product.modalType, product)}
-                    className={`btn btn-sm md:btn-md btn-base rounded-full flex items-center gap-1`}
+                    aria-label="Lihat Contoh"
+                    className={`btn btn-sm btn-square h-9 w-9 rounded-full flex items-center justify-center`}
                   >
-                    <ExternalLink className="h-3 w-3" />
-                    {product.modalType === "example" ? "Contoh" : "Rincian"}
+                    <ExternalLink className="h-4 w-4" />
                   </button>
                 )}
               </div>
