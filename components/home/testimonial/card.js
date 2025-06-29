@@ -2,14 +2,13 @@
 
 import Image from 'next/image';
 
-export default function TestimonialCard({ testimonialItem = {}, langName = 'en' }) {
+export default function TestimonialCard({ testimonialItem = {} }) {
 	return (
-		// REVISI: Padding diperkecil dari p-6 menjadi p-4
-		<div className='bg-base-200 p-4 rounded-lg h-full flex flex-col'>
-			{/* REVISI: Gap dan margin bawah diperkecil */}
-			<div className='flex items-center gap-3 mb-3'>
-				{/* REVISI: Ukuran avatar diperkecil dari w-12 h-12 menjadi w-10 h-10 */}
-				<div className='relative w-10 h-10 flex-shrink-0'>
+		// REVISI DRATIS: Semua elemen diperkecil secara signifikan
+		<div className='bg-base-200 p-3 rounded-lg h-full flex flex-col'>
+			<div className='flex items-center gap-2 mb-2'>
+				{/* Avatar & Font diperkecil drastis */}
+				<div className='relative w-8 h-8 flex-shrink-0'>
 					<Image
 						src={testimonialItem.avatar}
 						alt={testimonialItem.nickname}
@@ -18,14 +17,14 @@ export default function TestimonialCard({ testimonialItem = {}, langName = 'en' 
 					/>
 				</div>
 				<div>
-					<p className='font-semibold text-base-content'>{testimonialItem.nickname}</p>
-					<p className='text-sm text-base-content/70'>{testimonialItem.description}</p>
+					<p className='font-semibold text-sm text-base-content'>{testimonialItem.nickname}</p>
+					<p className='text-xs text-base-content/70'>{testimonialItem.description}</p>
 				</div>
 			</div>
 
-			<div className='flex-grow'>
-				{/* REVISI: Jarak antar baris teks diubah dari relaxed menjadi normal */}
-				<p className='text-sm text-base-content/80 leading-normal'>
+			<div className='flex-grow mt-1'>
+				{/* Font konten juga diperkecil */}
+				<p className='text-xs text-base-content/80 leading-normal'>
 					&ldquo;{testimonialItem.content}&rdquo;
 				</p>
 			</div>
