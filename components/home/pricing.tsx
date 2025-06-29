@@ -12,6 +12,7 @@ const SwiperSlide = dynamic(() => import('swiper/react').then((mod) => mod.Swipe
 
 import 'swiper/css';
 
+// Komponen Modal dan OrderingInstructions tidak berubah
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -96,6 +97,7 @@ function OrderingInstructions() {
   );
 }
 
+// Data produk dan kategori tidak berubah
 interface Product {
   name: string;
   price: string;
@@ -108,14 +110,11 @@ interface Product {
 }
 
 const productData: Product[] = [
-  // Website Products -> modalType: 'example'
   { name: 'Landing Page', price: 'Rp 20,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com', modalType: 'example' },
   { name: 'Profil Bisnis', price: 'Rp 20,000', superCategory: 'Website', category: 'profil_bisnis', categoryLabel: 'Profil Bisnis', imageUrl: 'https://images.unsplash.com/photo-1556740738-6b4a6d8b8b8b?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://profil-bisnis-demo.vercel.app', modalType: 'example' },
   { name: 'Link in Bio', price: 'Rp 20,000', superCategory: 'Website', category: 'personal', categoryLabel: 'Personal', imageUrl: 'https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=1472&auto=format&fit=crop', exampleUrl: 'https://linkinbio-demo.vercel.app', modalType: 'example' },
   { name: 'Digital Invitation', price: 'Rp 20,000', superCategory: 'Website', category: 'undangan', categoryLabel: 'Undangan', imageUrl: 'https://images.unsplash.com/photo-1587322849264-92d4734559e1?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://invitation-demo.vercel.app', modalType: 'example' },
   { name: 'Portfolio', price: 'Rp 20,000', superCategory: 'Website', category: 'portfolio', categoryLabel: 'Portfolio', imageUrl: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://portfolio-demo.vercel.app', modalType: 'example' },
-  
-  // Sosmed Boost & Lainnya Products -> modalType: 'details'
   { name: 'Jasa Kelola IG', price: 'Rp 50,000', superCategory: 'Sosmed Boost', category: 'jasa_kelola', categoryLabel: 'Jasa Kelola', imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1374&auto=format&fit=crop', modalType: 'details' },
   { name: 'Jasa Desain Feed', price: 'Rp 30,000', superCategory: 'Sosmed Boost', category: 'jasa_desain', categoryLabel: 'Jasa Desain', imageUrl: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1471&auto=format&fit=crop', modalType: 'details' },
   { name: 'Iklan Meta (FB/IG)', price: 'Rp 100,000', superCategory: 'Sosmed Boost', category: 'jasa_ads', categoryLabel: 'Jasa Ads', imageUrl: 'https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=1470&auto=format&fit=crop', modalType: 'details' },
@@ -141,6 +140,7 @@ const subCategories: { [key in Product['superCategory']]: { value: string; label
     { value: 'konsultasi', label: 'Konsultasi' },
   ],
 };
+
 
 export default function ServicesPage() {
   const { theme } = useTheme();
@@ -177,43 +177,41 @@ export default function ServicesPage() {
     setModalProduct(null);
   }, []);
 
-  const getButtonClasses = (isActive: boolean) =>
-    `btn btn-sm md:btn-md btn-base rounded-full whitespace-nowrap px-4 py-2 transition-all duration-300 ${
-      isActive
-        ? 'border-none ring-1 ring-base-content/50 text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 shadow-md'
-        : 'border border-base-content/20 text-base-content hover:bg-base-100/50 hover:shadow-sm'
-    }`;
-
   if (!mounted) return null;
 
   return (
     <div id='pricing' className='min-h-screen w-full pt-20 pb-8'>
       <div className='w-full'>
-        {/* REVISED: Button container with flex-wrap for a stable layout */}
-        <div className='flex justify-center flex-wrap gap-3 mb-4 px-2'>
-          <button onClick={() => setActiveSuperCategory('Website')} className={getButtonClasses(activeSuperCategory === 'Website')}>
-            Website
-          </button>
-          <button onClick={() => setActiveSuperCategory('Sosmed Boost')} className={getButtonClasses(activeSuperCategory === 'Sosmed Boost')}>
-            Sosmed Boost
-          </button>
-          <button onClick={() => setActiveSuperCategory('Lainnya')} className={getButtonClasses(activeSuperCategory === 'Lainnya')}>
-            Lainnya
-          </button>
-        </div>
+        
+        {/* REVISED: Layout diubah menjadi dropdown untuk navigasi yang ringkas */}
+        <div className='flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 px-2'>
+          {/* Kategori Dropdown */}
+          <div className="w-full sm:w-52">
+            <select 
+              className="select select-bordered w-full" 
+              value={activeSuperCategory} 
+              onChange={(e) => setActiveSuperCategory(e.target.value as Product['superCategory'])}
+              aria-label="Pilih Kategori Utama"
+            >
+              {Object.keys(subCategories).map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
 
-        {/* REVISED: Button container with flex-wrap for a stable layout */}
-        <div className='flex justify-center flex-wrap gap-3 mb-8 px-2'>
-          {subCategories[activeSuperCategory] &&
-            subCategories[activeSuperCategory].map((sub) => (
-              <button
-                key={sub.value}
-                onClick={() => setActiveSubCategory(sub.value)}
-                className={getButtonClasses(activeSubCategory === sub.value)}
-              >
-                {sub.label}
-              </button>
-            ))}
+          {/* Sub-Kategori Dropdown */}
+          <div className="w-full sm:w-52">
+            <select 
+              className="select select-bordered w-full" 
+              value={activeSubCategory} 
+              onChange={(e) => setActiveSubCategory(e.target.value)}
+              aria-label="Pilih Sub-Kategori"
+            >
+              {subCategories[activeSuperCategory]?.map((sub) => (
+                <option key={sub.value} value={sub.value}>{sub.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className='grid grid-cols-2 gap-2'>
