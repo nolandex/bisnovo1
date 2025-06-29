@@ -36,7 +36,8 @@ export default function LangLayout({ children, params }) {
 	return (
 		<>
 			<Navbar lang={lang} />
-			<div className='px-5'>{children}</div>
+            {/* --- PERUBAHAN DI BARIS INI --- */}
+			<div className='px-5 pt-16'>{children}</div> 
 			<Footer lang={lang} />
 		</>
 	);
