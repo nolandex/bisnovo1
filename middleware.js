@@ -1,41 +1,42 @@
 import { reportLanguage } from './lib/function/lang';
-import { locales } from './lib/i18n';
+// PERUBAHAN 1: Impor locales dan defaultLocale dari file i18n
+import { locales, defaultLocale } from './lib/i18n'; 
 import { NextRequest, NextResponse } from 'next/server';
 
+// PERUBAHAN 2: Gunakan variabel `defaultLocale` untuk tujuan rewrite
 const rewritePaths = [
-    { pattern: /^\/$/, destination: '/en/' },
-	{ pattern: /^\/about(\/)?$/, destination: '/en/about' },
-    { pattern: /^\/blog(\/)?$/, destination: '/en/blog' },
-    { pattern: /^\/blog\/([^\/]+)(\/)?$/, destination: '/en/blog/$1' },
-    // 可以根据需要添加更多的重写规则
+    { pattern: /^\/$/, destination: `/${defaultLocale}/` },
+	{ pattern: /^\/about(\/)?$/, destination: `/${defaultLocale}/about` },
+    { pattern: /^\/blog(\/)?$/, destination: `/${defaultLocale}/blog` },
+    { pattern: /^\/blog\/([^\/]+)(\/)?$/, destination: `/${defaultLocale}/blog/$1` },
+    // Anda bisa menambahkan aturan lain di sini jika perlu
 ];
 
 export function middleware(request) {
 	const { pathname } = request.nextUrl;
-	console.log("当前路径:", pathname);  // 保留日志
+	console.log("当前路径:", pathname);
 
 	const lang = reportLanguage(pathname);
 	request.headers.set('x-pathname', pathname);
 	request.headers.set('x-language-directory', lang);
 
-	// 检查是否已经包含语言代码
 	const isExit = locales.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`);
 
-	// 应用重写规则
+	// Aplikasi aturan rewrite
 	for (const { pattern, destination } of rewritePaths) {
 		const match = pathname.match(pattern);
 		if (match) {
-			console.log(`重写路径: ${pathname} -> ${destination}`);  // 添加日志
+			console.log(`重写路径: ${pathname} -> ${destination}`);
+			// Logika replace di sini tidak perlu diubah karena sudah menggunakan pattern
 			request.nextUrl.pathname = pathname.replace(pattern, destination);
 			return NextResponse.rewrite(request.nextUrl);
 		}
 	}
 
-
 	if (isExit) return NextResponse.next();
 
-	// 如果没有匹配的重写规则，重定向到根路径
-	console.log(`重定向到根路径: ${pathname} -> /`);  // 添加日志
+	// Jika tidak ada aturan yang cocok, redirect ke halaman utama (yang akan di-rewrite lagi)
+	console.log(`重定向到根路径: ${pathname} -> /`);
 	request.nextUrl.pathname = `/`;
 	return NextResponse.redirect(request.nextUrl);
 }
