@@ -110,56 +110,16 @@ interface Product {
 }
 
 const productData: Product[] = [
-  {
-    name: "Landing Page", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://unbounce.com", modalType: "example",
-  },
-  {
-    name: "Simple Store", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page",
-    imageUrl: "https://images.unsplash.com/photo-1556740738-6b4a6d8b8b8b?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://shopify.com", modalType: "example",
-  },
-  {
-    name: "Online Course", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://course-demo.vercel.app", modalType: "example",
-  },
-  {
-    name: "Membership", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://membership-demo.vercel.app", modalType: "example",
-  },
-    {
-    name: "Profil Bisnis", price: "Rp 20,000", superCategory: "Bisnis", category: "profil_bisnis", categoryLabel: "Profil Bisnis",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://profil-bisnis-demo.vercel.app", modalType: "example",
-  },
-  {
-    name: "Link in Bio", price: "Rp 20,000", superCategory: "Nonbisnis", category: "personal", categoryLabel: "Personal",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://linkinbio-demo.vercel.app", modalType: "example",
-  },
-  {
-    name: "Digital Invitation", price: "Rp 20,000", superCategory: "Nonbisnis", category: "undangan", categoryLabel: "Undangan",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://invitation-demo.vercel.app", modalType: "example",
-  },
-  {
-    name: "Birthday", price: "Rp 20,000", superCategory: "Nonbisnis", category: "undangan", categoryLabel: "Undangan",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://birthday-demo.vercel.app", modalType: "example",
-  },
-  {
-    name: "Event", price: "Rp 20,000", superCategory: "Nonbisnis", category: "undangan", categoryLabel: "Undangan",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://event-demo.vercel.app", modalType: "example",
-  },
-  {
-    name: "Portfolio", price: "Rp 20,000", superCategory: "Nonbisnis", category: "portfolio", categoryLabel: "Portfolio",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://portfolio-demo.vercel.app", modalType: "example",
-  },
+    { name: "Landing Page", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page", imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://unbounce.com", modalType: "example" },
+    { name: "Simple Store", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page", imageUrl: "https://images.unsplash.com/photo-1556740738-6b4a6d8b8b8b?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://shopify.com", modalType: "example" },
+    { name: "Online Course", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page", imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://course-demo.vercel.app", modalType: "example" },
+    { name: "Membership", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page", imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://membership-demo.vercel.app", modalType: "example" },
+    { name: "Profil Bisnis", price: "Rp 20,000", superCategory: "Bisnis", category: "profil_bisnis", categoryLabel: "Profil Bisnis", imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://profil-bisnis-demo.vercel.app", modalType: "example" },
+    { name: "Link in Bio", price: "Rp 20,000", superCategory: "Nonbisnis", category: "personal", categoryLabel: "Personal", imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://linkinbio-demo.vercel.app", modalType: "example" },
+    { name: "Digital Invitation", price: "Rp 20,000", superCategory: "Nonbisnis", category: "undangan", categoryLabel: "Undangan", imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://invitation-demo.vercel.app", modalType: "example" },
+    { name: "Birthday", price: "Rp 20,000", superCategory: "Nonbisnis", category: "undangan", categoryLabel: "Undangan", imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://birthday-demo.vercel.app", modalType: "example" },
+    { name: "Event", price: "Rp 20,000", superCategory: "Nonbisnis", category: "undangan", categoryLabel: "Undangan", imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://event-demo.vercel.app", modalType: "example" },
+    { name: "Portfolio", price: "Rp 20,000", superCategory: "Nonbisnis", category: "portfolio", categoryLabel: "Portfolio", imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop", exampleUrl: "https://portfolio-demo.vercel.app", modalType: "example" },
 ];
 
 
@@ -186,7 +146,6 @@ export default function ServicesPage() {
 
   useEffect(() => {
     setMounted(true);
-    // Reset sub-category when super category changes
     setActiveSubCategory("all");
   }, [activeSuperCategory]);
 
@@ -225,9 +184,8 @@ export default function ServicesPage() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen pt-20 pb-8">
-      <div className="container max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Super Category Filter */}
+    <div className="min-h-screen w-full pt-20 pb-8">
+      <div className="w-full px-2 md:px-4">
         <div className="flex justify-center overflow-x-auto space-x-3 mb-4 pb-2 snap-x snap-mandatory">
           <button
             onClick={() => setActiveSuperCategory("Bisnis")}
@@ -243,7 +201,6 @@ export default function ServicesPage() {
           </button>
         </div>
 
-        {/* Sub Category Filter */}
         <div className="flex justify-center overflow-x-auto space-x-3 mb-8 pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 snap-x snap-mandatory">
           <button
             onClick={() => setActiveSubCategory("all")}
@@ -262,32 +219,38 @@ export default function ServicesPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* ===============================================================
+          PERUBAHAN DI SINI:
+          Diubah dari "grid-cols-1 sm:grid-cols-2" menjadi "grid-cols-2"
+          agar selalu 2 kolom di semua ukuran layar.
+          ===============================================================
+        */}
+        <div className="grid grid-cols-2 gap-2">
           {filteredProducts.map((product) => (
             <div
               key={product.name}
               className={`flex flex-col rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${
                 theme === "dark" ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"
-              } p-4`}
+              } p-3`}
             >
-              <div className="flex justify-between items-start mb-3">
+              <div className="flex justify-between items-start mb-2">
                 <h3
-                  className={`font-bold leading-tight text-base ${
+                  className={`font-bold leading-tight text-sm ${
                     theme === "dark" ? "text-white" : "text-gray-900"
                   }`}
                 >
                   {product.name}
                 </h3>
                 <span
-                  className={`px-3 py-1 rounded-full font-bold whitespace-nowrap ml-2 text-xs shadow-sm border-none ring-1 ring-emerald-500/50 text-emerald-500 bg-emerald-500/10`}
+                  className={`px-2 py-1 rounded-full font-bold whitespace-nowrap ml-2 text-xs shadow-sm border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100`}
                 >
                   {product.price}
                 </span>
               </div>
 
-              <div className="flex-grow mb-4">
+              <div className="flex-grow mb-3">
                 {product.imageUrl && (
-                  <div className="relative w-full h-40">
+                  <div className="relative w-full h-32">
                     <Image
                       src={product.imageUrl}
                       alt={`${product.name} preview`}
@@ -307,9 +270,9 @@ export default function ServicesPage() {
                 {product.modalType && (
                   <button
                     onClick={() => openModal(product.modalType, product)}
-                    className={`btn btn-sm md:btn-md btn-base rounded-full flex items-center gap-1.5`}
+                    className={`btn btn-sm md:btn-md btn-base rounded-full flex items-center gap-1`}
                   >
-                    <ExternalLink className="h-4 w-4" />
+                    <ExternalLink className="h-3 w-3" />
                     {product.modalType === "example" ? "Contoh" : "Rincian"}
                   </button>
                 )}
