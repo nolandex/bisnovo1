@@ -101,7 +101,9 @@ function OrderingInstructions() {
 interface Product {
   name: string;
   price: string;
-  category: "landing_page" | "portfolio" | "profil_bisnis";
+  superCategory: "Bisnis" | "Nonbisnis";
+  category: "landing_page" | "portfolio" | "profil_bisnis" | "undangan" | "personal";
+  categoryLabel: string;
   imageUrl?: string;
   exampleUrl?: string;
   modalType?: "example" | "details";
@@ -109,99 +111,90 @@ interface Product {
 
 const productData: Product[] = [
   {
-    name: "Landing Page",
-    price: "Rp 20,000",
-    category: "landing_page",
+    name: "Landing Page", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://unbounce.com",
-    modalType: "example",
+    exampleUrl: "https://unbounce.com", modalType: "example",
   },
   {
-    name: "Simple Store",
-    price: "Rp 20,000",
-    category: "landing_page",
+    name: "Simple Store", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page",
     imageUrl: "https://images.unsplash.com/photo-1556740738-6b4a6d8b8b8b?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://shopify.com",
-    modalType: "example",
+    exampleUrl: "https://shopify.com", modalType: "example",
   },
   {
-    name: "Online Course",
-    price: "Rp 20,000",
-    category: "landing_page",
+    name: "Online Course", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://course-demo.vercel.app",
-    modalType: "example",
+    exampleUrl: "https://course-demo.vercel.app", modalType: "example",
   },
   {
-    name: "Membership",
-    price: "Rp 20,000",
-    category: "landing_page",
+    name: "Membership", price: "Rp 20,000", superCategory: "Bisnis", category: "landing_page", categoryLabel: "Landing Page",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://membership-demo.vercel.app",
-    modalType: "example",
+    exampleUrl: "https://membership-demo.vercel.app", modalType: "example",
+  },
+    {
+    name: "Profil Bisnis", price: "Rp 20,000", superCategory: "Bisnis", category: "profil_bisnis", categoryLabel: "Profil Bisnis",
+    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
+    exampleUrl: "https://profil-bisnis-demo.vercel.app", modalType: "example",
   },
   {
-    name: "Link in Bio",
-    price: "Rp 20,000",
-    category: "landing_page",
+    name: "Link in Bio", price: "Rp 20,000", superCategory: "Nonbisnis", category: "personal", categoryLabel: "Personal",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://linkinbio-demo.vercel.app",
-    modalType: "example",
+    exampleUrl: "https://linkinbio-demo.vercel.app", modalType: "example",
   },
   {
-    name: "Digital Invitation",
-    price: "Rp 20,000",
-    category: "landing_page",
+    name: "Digital Invitation", price: "Rp 20,000", superCategory: "Nonbisnis", category: "undangan", categoryLabel: "Undangan",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://invitation-demo.vercel.app",
-    modalType: "example",
+    exampleUrl: "https://invitation-demo.vercel.app", modalType: "example",
   },
   {
-    name: "Birthday",
-    price: "Rp 20,000",
-    category: "landing_page",
+    name: "Birthday", price: "Rp 20,000", superCategory: "Nonbisnis", category: "undangan", categoryLabel: "Undangan",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://birthday-demo.vercel.app",
-    modalType: "example",
+    exampleUrl: "https://birthday-demo.vercel.app", modalType: "example",
   },
   {
-    name: "Event",
-    price: "Rp 20,000",
-    category: "landing_page",
+    name: "Event", price: "Rp 20,000", superCategory: "Nonbisnis", category: "undangan", categoryLabel: "Undangan",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://event-demo.vercel.app",
-    modalType: "example",
+    exampleUrl: "https://event-demo.vercel.app", modalType: "example",
   },
   {
-    name: "Portfolio",
-    price: "Rp 20,000",
-    category: "portfolio",
+    name: "Portfolio", price: "Rp 20,000", superCategory: "Nonbisnis", category: "portfolio", categoryLabel: "Portfolio",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://portfolio-demo.vercel.app",
-    modalType: "example",
-  },
-  {
-    name: "Profil Bisnis",
-    price: "Rp 20,000",
-    category: "profil_bisnis",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop",
-    exampleUrl: "https://profil-bisnis-demo.vercel.app",
-    modalType: "example",
+    exampleUrl: "https://portfolio-demo.vercel.app", modalType: "example",
   },
 ];
+
+
+const subCategories: { [key in Product["superCategory"]]: { value: Product["category"]; label: string }[] } = {
+  Bisnis: [
+    { value: "landing_page", label: "Landing Page" },
+    { value: "profil_bisnis", label: "Profil Bisnis" },
+  ],
+  Nonbisnis: [
+    { value: "portfolio", label: "Portfolio" },
+    { value: "undangan", label: "Undangan" },
+    { value: "personal", label: "Personal" },
+  ],
+};
+
 
 export default function ServicesPage() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<Product["category"]>("landing_page");
-  const [activeModal, setActiveModal] = useState<Product["modalType"]>(null);
+  const [activeSuperCategory, setActiveSuperCategory] = useState<Product["superCategory"]>("Bisnis");
+  const [activeSubCategory, setActiveSubCategory] = useState<Product["category"] | "all">("all");
+  const [activeModal, setActiveModal] = useState<Product["modalType"] | null>(null);
   const [modalProduct, setModalProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    // Reset sub-category when super category changes
+    setActiveSubCategory("all");
+  }, [activeSuperCategory]);
 
-  const filteredProducts = productData.filter((product) => product.category === activeCategory);
+  const filteredProducts = productData.filter(
+    (product) =>
+      product.superCategory === activeSuperCategory &&
+      (activeSubCategory === "all" || product.category === activeSubCategory)
+  );
 
   const openModal = useCallback(
     (type: Product["modalType"], product?: Product) => {
@@ -220,66 +213,81 @@ export default function ServicesPage() {
     setModalProduct(null);
   }, []);
 
-  const getCategoryButtonClasses = (isActive: boolean) => {
+  const getButtonClasses = (isActive: boolean) => {
     return `btn btn-sm md:btn-md btn-base rounded-full whitespace-nowrap px-4 py-2 transition-all duration-300 ${
       isActive
         ? "border-none ring-1 ring-base-content/50 text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 shadow-md"
         : "border border-base-content/20 text-base-content hover:bg-base-100/50 hover:shadow-sm"
     }`;
   };
+  
 
   if (!mounted) return null;
 
   return (
     <div className="min-h-screen pt-20 pb-8">
       <div className="container max-w-4xl mx-auto px-4 sm:px-6">
-        <div className="flex overflow-x-auto space-x-3 mb-8 pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 snap-x snap-mandatory">
+        {/* Super Category Filter */}
+        <div className="flex justify-center overflow-x-auto space-x-3 mb-4 pb-2 snap-x snap-mandatory">
           <button
-            onClick={() => setActiveCategory("landing_page")}
-            className={getCategoryButtonClasses(activeCategory === "landing_page")}
+            onClick={() => setActiveSuperCategory("Bisnis")}
+            className={getButtonClasses(activeSuperCategory === "Bisnis")}
           >
-            Landing Page
+            Bisnis
           </button>
           <button
-            onClick={() => setActiveCategory("portfolio")}
-            className={getCategoryButtonClasses(activeCategory === "portfolio")}
+            onClick={() => setActiveSuperCategory("Nonbisnis")}
+            className={getButtonClasses(activeSuperCategory === "Nonbisnis")}
           >
-            Portfolio
-          </button>
-          <button
-            onClick={() => setActiveCategory("profil_bisnis")}
-            className={getCategoryButtonClasses(activeCategory === "profil_bisnis")}
-          >
-            Profil Bisnis
+            Nonbisnis
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Sub Category Filter */}
+        <div className="flex justify-center overflow-x-auto space-x-3 mb-8 pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 snap-x snap-mandatory">
+          <button
+            onClick={() => setActiveSubCategory("all")}
+            className={getButtonClasses(activeSubCategory === "all")}
+          >
+            Semua
+          </button>
+          {subCategories[activeSuperCategory].map((sub) => (
+            <button
+              key={sub.value}
+              onClick={() => setActiveSubCategory(sub.value)}
+              className={getButtonClasses(activeSubCategory === sub.value)}
+            >
+              {sub.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {filteredProducts.map((product) => (
             <div
               key={product.name}
               className={`flex flex-col rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${
                 theme === "dark" ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"
-              } p-3`}
+              } p-4`}
             >
-              <div className="flex justify-between items-start mb-2">
+              <div className="flex justify-between items-start mb-3">
                 <h3
-                  className={`font-bold leading-tight text-sm ${
+                  className={`font-bold leading-tight text-base ${
                     theme === "dark" ? "text-white" : "text-gray-900"
                   }`}
                 >
                   {product.name}
                 </h3>
                 <span
-                  className={`px-2 py-1 rounded-full font-bold whitespace-nowrap ml-2 text-xs shadow-sm border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100`}
+                  className={`px-3 py-1 rounded-full font-bold whitespace-nowrap ml-2 text-xs shadow-sm border-none ring-1 ring-emerald-500/50 text-emerald-500 bg-emerald-500/10`}
                 >
                   {product.price}
                 </span>
               </div>
 
-              <div className="flex-grow mb-3">
+              <div className="flex-grow mb-4">
                 {product.imageUrl && (
-                  <div className="relative w-full h-32">
+                  <div className="relative w-full h-40">
                     <Image
                       src={product.imageUrl}
                       alt={`${product.name} preview`}
@@ -299,9 +307,9 @@ export default function ServicesPage() {
                 {product.modalType && (
                   <button
                     onClick={() => openModal(product.modalType, product)}
-                    className={`btn btn-sm md:btn-md btn-base rounded-full flex items-center gap-1`}
+                    className={`btn btn-sm md:btn-md btn-base rounded-full flex items-center gap-1.5`}
                   >
-                    <ExternalLink className="h-3 w-3" />
+                    <ExternalLink className="h-4 w-4" />
                     {product.modalType === "example" ? "Contoh" : "Rincian"}
                   </button>
                 )}
@@ -327,4 +335,4 @@ export default function ServicesPage() {
       </div>
     </div>
   );
-	  }
+}
