@@ -1,99 +1,132 @@
-// Lokasi: src/components/marketing/navbar.tsx (atau file Navbar Anda)
-
 'use client';
 
-import Link from 'next/link';
-import { useState } from 'react';
-import {
-	Menu,
-	X,
-	Home,
-	LayoutGrid,
-	Sparkles,
-	Tag,
-	MessageSquare,
-	Mail,
-} from 'lucide-react';
+// Import dari React dan Next.js
+import { useEffect, useState, useRef } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link'; // Gunakan Link dari Next.js untuk navigasi
 
-// Daftar link navigasi untuk di-map
-const navLinks = [
-	{ href: '#hero', label: 'Home', Icon: Home },
-	{ href: '#layanan', label: 'Layanan', Icon: LayoutGrid },
-	{ href: '#perks', label: 'Features', Icon: Sparkles },
-	{ href: '#pricing', label: 'Pricing', Icon: Tag },
-	{ href: '#reviews', label: 'Reviews', Icon: MessageSquare },
-	{ href: '#footer', label: 'Contact', Icon: Mail },
-];
+// Import komponen dan utilitas Anda
+import ThemeToggle from './themeToggle';
+import LangSwitch from './langSwitch';
+import { defaultLocale } from '@/lib/i18n';
+import { NavLinksList } from '@/lib/navLinksList';
+
+// Import ikon untuk menu hamburger dari lucide-react
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
+	// --- State dari kode LAMA Anda (DIPERTAHANKAN) ---
+	const pathname = usePathname();
+	const [langName, setLangName] = useState(defaultLocale);
+	const [linkList, setLinkList] = useState([]);
+
+	// --- State dari kode BARU (DITAMBAHKAN) ---
 	const [isOpen, setIsOpen] = useState(false);
 
-	// Fungsi untuk handle smooth scroll
-	const handleScroll = (e) => {
-		e.preventDefault();
-		const href = e.currentTarget.href;
-		const targetId = href.replace(/.*#/, '');
-		const elem = document.getElementById(targetId);
+	// --- Logika filter link dari kode LAMA Anda (DIPERTAHANKAN) ---
+	useEffect(() => {
+		const fetchLinksList = () => {
+			if (pathname === '/') {
+				setLangName(defaultLocale);
+			} else {
+				setLangName(pathname.split('/')[1]);
+			}
 
-		if (elem) {
-			elem.scrollIntoView({
-				behavior: 'smooth',
+			let originalLinks = NavLinksList[`LINK_${langName.toUpperCase()}`] || [];
+
+			let modifiedLinks = originalLinks.map((link) => {
+				if (link.name.toLowerCase() === 'blog') {
+					return { ...link, name: 'Kontak' };
+				}
+				return link;
 			});
-			// Tutup menu setelah link diklik (untuk mobile)
-			setIsOpen(false);
-		}
-	};
+
+			const linksToRemove = ['faq', 'testimoni', 'feature', 'about'];
+			let filteredLinks = modifiedLinks.filter(
+				(link) => !linksToRemove.includes(link.name.toLowerCase())
+			);
+
+			setLinkList(filteredLinks);
+		};
+
+		fetchLinksList();
+	}, [pathname, langName]);
+
+	// Menutup menu saat diklik di luar (bisa disesuaikan jika perlu)
+	const dropdownRef = useRef(null);
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+				setIsOpen(false);
+			}
+		};
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [dropdownRef]);
 
 	return (
-		<header className='fixed top-0 left-0 w-full z-50 bg-[rgba(10,10,10,0.6)] backdrop-blur-md'>
-			<nav className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-				<div className='flex items-center justify-between h-14'>
-					{/* Logo */}
-					<div className='flex-shrink-0 text-white font-semibold text-lg'>
-						<Link href='#hero' onClick={handleScroll}>
-							Bisnovo
-						</Link>
-					</div>
+		// --- Mengadopsi struktur & style dari Header BARU ---
+		<header className='fixed top-0 left-0 w-full z-50 bg-base-100/80 backdrop-blur-md shadow-sm'>
+			<nav className='container mx-auto px-4 sm:px-6 lg:px-8'>
+				<div className='flex items-center justify-between h-16'>
+					{/* Logo dari kode LAMA Anda */}
+					<Link
+						href={`/${langName}`}
+						className='text-2xl font-bold text-base-content'
+						aria-label='brand logo'
+						title='brand logo'
+					>
+						Bisnovo
+					</Link>
 
-					{/* Navigasi Desktop */}
-					<div className='hidden lg:flex space-x-6 items-center'>
-						{navLinks.map((link) => (
-							<Link
-								key={link.href}
-								href={link.href}
-								onClick={handleScroll}
-								className='text-sm font-medium text-white hover:text-cyan-400 transition-colors'
-							>
-								{link.label}
-							</Link>
+					{/* Navigasi Desktop (Style dari kode BARU, Logika dari LAMA) */}
+					<ul className='hidden lg:flex space-x-8 items-center'>
+						{linkList.map((link, index) => (
+							<li key={index}>
+								<Link
+									href={`/${langName}${link.url}`}
+									className='text-sm font-medium text-base-content hover:text-primary transition-colors'
+									title={link.name}
+								>
+									{link.name}
+								</Link>
+							</li>
 						))}
-					</div>
+					</ul>
 
-					{/* Tombol Hamburger untuk Mobile */}
-					<div className='lg:hidden'>
-						<button
-							onClick={() => setIsOpen(!isOpen)}
-							className='text-white focus:outline-none'
-							aria-label='Toggle Menu'
-						>
-							{isOpen ? <X size={24} /> : <Menu size={24} />}
-						</button>
+					<div className='flex items-center gap-2'>
+						{/* Tombol Theme & Bahasa dari kode LAMA Anda */}
+						<ThemeToggle />
+						<LangSwitch />
+
+						{/* Tombol Hamburger dari kode BARU */}
+						<div className='lg:hidden' ref={dropdownRef}>
+							<button
+								onClick={() => setIsOpen(!isOpen)}
+								className='p-2 rounded-md text-base-content focus:outline-none'
+								aria-label='Toggle Menu'
+							>
+								{isOpen ? <X size={24} /> : <Menu size={24} />}
+							</button>
+						</div>
 					</div>
 				</div>
 
-				{/* Menu Dropdown untuk Mobile */}
+				{/* Menu Dropdown Mobile (Struktur dari BARU, Logika dari LAMA) */}
 				{isOpen && (
-					<div className='lg:hidden w-full px-4 pb-4 pt-2'>
-						<ul className='space-y-2'>
-							{navLinks.map(({ href, label, Icon }) => (
-								<li key={href}>
+					<div className='lg:hidden w-full px-2 pb-4 pt-2'>
+						<ul className='space-y-1'>
+							{linkList.map(({ url, name }, index) => (
+								<li key={index}>
 									<Link
-										href={href}
-										onClick={handleScroll}
-										className='flex items-center gap-4 p-3 rounded-lg text-white hover:bg-white/10 transition-colors'
+										href={`/${langName}${url}`}
+										onClick={() => setIsOpen(false)} // Tutup menu setelah diklik
+										className='flex items-center gap-4 p-3 rounded-lg text-base-content hover:bg-base-200 transition-colors'
+										title={name}
 									>
-										<Icon className='h-5 w-5 text-cyan-400' />
-										<span className='text-base font-medium'>{label}</span>
+										<span className='text-base font-medium'>{name}</span>
 									</Link>
 								</li>
 							))}
