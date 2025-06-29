@@ -1,19 +1,11 @@
 'use client';
-import React from 'react';
 
-export default function FeatureCard({ featureItem = {} }) {
+export default function FeatureCard({ featureItem }) {
 	return (
-		// PERUBAHAN DI SINI:
-		// 1. `aspect-square` ditambahkan untuk membuat rasio 1:1 (kotak).
-		// 2. `justify-center` ditambahkan agar konten berada di tengah secara vertikal.
-		<div
-			className='w-full p-4 border-2 border-base-content rounded-xl flex flex-col items-center justify-center gap-2 transition-all duration-100 shadow-none hover:shadow-2xl hover:scale-110 bg-base-100 aspect-square'
-		>
-			<div className="text-center">
-				{featureItem.icon && React.createElement(featureItem.icon, { className: 'text-2xl mx-auto' })}
-				<h2 className='mt-2 text-base font-bold'>{featureItem.title}</h2>
-				<p className='text-xs'>{featureItem.description}</p>
-			</div>
+		<div className="flex flex-col items-center text-center border-2 border-base-content rounded-xl p-5 min-h-[220px] flex-1 shadow hover:shadow-xl transition-all duration-300">
+			<div className="text-4xl mb-2">{<featureItem.icon />}</div>
+			<h3 className="font-bold text-lg">{featureItem.title}</h3>
+			<p className="text-sm opacity-80">{featureItem.description}</p>
 		</div>
 	);
 }
