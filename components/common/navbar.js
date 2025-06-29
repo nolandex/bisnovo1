@@ -1,87 +1,106 @@
-'use client';
-import Image from 'next/image';
-// MdMenu dan MdClose dihapus karena tidak digunakan lagi
-import { useEffect, useState } from 'react';
-import ThemeToggle from './themeToggle';
-import LangSwitch from './langSwitch';
+// Lokasi: src/components/marketing/navbar.tsx (atau file Navbar Anda)
 
-import { usePathname } from 'next/navigation';
-import { defaultLocale } from '@/lib/i18n';
-import { NavLinksList } from '@/lib/navLinksList';
+'use client';
+
+import Link from 'next/link';
+import { useState } from 'react';
+import {
+	Menu,
+	X,
+	Home,
+	LayoutGrid,
+	Sparkles,
+	Tag,
+	MessageSquare,
+	Mail,
+} from 'lucide-react';
+
+// Daftar link navigasi untuk di-map
+const navLinks = [
+	{ href: '#hero', label: 'Home', Icon: Home },
+	{ href: '#layanan', label: 'Layanan', Icon: LayoutGrid },
+	{ href: '#perks', label: 'Features', Icon: Sparkles },
+	{ href: '#pricing', label: 'Pricing', Icon: Tag },
+	{ href: '#reviews', label: 'Reviews', Icon: MessageSquare },
+	{ href: '#footer', label: 'Contact', Icon: Mail },
+];
 
 export default function Navbar() {
-	const pathname = usePathname();
-	const [langName, setLangName] = useState(defaultLocale);
-	const [linkList, setLinkList] = useState([]);
-	
-	// State dan ref untuk menu mobile dihapus
-	// const [isMenuOpen, setIsMenuOpen] = useState(false);
-	// const dropdownRef = useRef(null);
+	const [isOpen, setIsOpen] = useState(false);
 
-	// Logika untuk mengubah dan memfilter link navigasi
-	useEffect(() => {
-		const fetchLinksList = () => {
-			if (pathname === '/') {
-				setLangName(defaultLocale);
-			} else {
-				setLangName(pathname.split('/')[1]);
-			}
-			
-			let originalLinks = NavLinksList[`LINK_${langName.toUpperCase()}`] || [];
+	// Fungsi untuk handle smooth scroll
+	const handleScroll = (e) => {
+		e.preventDefault();
+		const href = e.currentTarget.href;
+		const targetId = href.replace(/.*#/, '');
+		const elem = document.getElementById(targetId);
 
-			let modifiedLinks = originalLinks.map(link => {
-				if (link.name.toLowerCase() === 'blog') {
-					return { ...link, name: 'Kontak' };
-				}
-				return link;
+		if (elem) {
+			elem.scrollIntoView({
+				behavior: 'smooth',
 			});
-			
-			const linksToRemove = ['faq', 'testimoni', 'feature', 'about']; 
-			
-			let filteredLinks = modifiedLinks.filter(link => 
-				!linksToRemove.includes(link.name.toLowerCase())
-			);
-
-			setLinkList(filteredLinks);
-		};
-
-		fetchLinksList();
-	}, [pathname, langName]);
-
-	// useEffect untuk menutup menu saat klik di luar area dihapus
+			// Tutup menu setelah link diklik (untuk mobile)
+			setIsOpen(false);
+		}
+	};
 
 	return (
-		<header className='w-full relative z-50 bg-base-100 px-5 container mx-auto flex justify-between items-center'>
-			<a
-				aria-label='brand logo'
-				className='flex items-center'
-				title='brand logo'
-				href={`/${langName}`}
-			>
-				<h2 className='font-bold text-2xl'>Bisnovo</h2>
-			</a>
+		<header className='fixed top-0 left-0 w-full z-50 bg-[rgba(10,10,10,0.6)] backdrop-blur-md'>
+			<nav className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+				<div className='flex items-center justify-between h-14'>
+					{/* Logo */}
+					<div className='flex-shrink-0 text-white font-semibold text-lg'>
+						<Link href='#hero' onClick={handleScroll}>
+							Bisnovo
+						</Link>
+					</div>
 
-			<ul className='hidden md:flex flex-nowrap items-center justify-center gap-10 font-medium'>
-				{linkList.map((link, index) => (
-					<li key={index} className='group py-3 text-center'>
-						<a
-							aria-label={link.name}
-							className='group relative'
-							title={link.name}
-							href={`/${langName}${link.url}`}
+					{/* Navigasi Desktop */}
+					<div className='hidden lg:flex space-x-6 items-center'>
+						{navLinks.map((link) => (
+							<Link
+								key={link.href}
+								href={link.href}
+								onClick={handleScroll}
+								className='text-sm font-medium text-white hover:text-cyan-400 transition-colors'
+							>
+								{link.label}
+							</Link>
+						))}
+					</div>
+
+					{/* Tombol Hamburger untuk Mobile */}
+					<div className='lg:hidden'>
+						<button
+							onClick={() => setIsOpen(!isOpen)}
+							className='text-white focus:outline-none'
+							aria-label='Toggle Menu'
 						>
-							{link.name}
-							<div className='absolute left-[50%] group-hover:left-0 w-0 group-hover:w-full h-[3px] transition-all duration-300 bg-base-content/90'></div>
-						</a>
-					</li>
-				))}
-			</ul>
+							{isOpen ? <X size={24} /> : <Menu size={24} />}
+						</button>
+					</div>
+				</div>
 
-			<div className='flex items-center justify-end gap-2'>
-				<ThemeToggle />
-				<LangSwitch />
-				{/* PERUBAHAN DI SINI: Menu hamburger telah dihapus */}
-			</div>
+				{/* Menu Dropdown untuk Mobile */}
+				{isOpen && (
+					<div className='lg:hidden w-full px-4 pb-4 pt-2'>
+						<ul className='space-y-2'>
+							{navLinks.map(({ href, label, Icon }) => (
+								<li key={href}>
+									<Link
+										href={href}
+										onClick={handleScroll}
+										className='flex items-center gap-4 p-3 rounded-lg text-white hover:bg-white/10 transition-colors'
+									>
+										<Icon className='h-5 w-5 text-cyan-400' />
+										<span className='text-base font-medium'>{label}</span>
+									</Link>
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+			</nav>
 		</header>
 	);
 }
