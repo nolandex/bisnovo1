@@ -35,7 +35,8 @@ export default function Hero({ locale }) {
           transition={{ delay: 0.4, type: 'spring', stiffness: 100, damping: 10 }}
           className='w-full'
         >
-          <h1 className='font-bold text-5xl md:text-7xl bg-gradient-to-r from-base-content from-50% to-[#9c9c9c] bg-clip-text text-transparent !leading-[1.25em] mb-5'>
+          {/* REVISI: Menghapus kelas gradient dan menggantinya dengan warna teks solid */}
+          <h1 className='font-bold text-5xl md:text-7xl text-base-content !leading-[1.25em] mb-5'>
             {locale.h1}
           </h1>
         </motion.div>
@@ -93,8 +94,6 @@ export default function Hero({ locale }) {
           />
         </motion.div>
       </section>
-
-      {/* The background grid pattern has been removed as requested */}
     </>
   );
 }
