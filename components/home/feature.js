@@ -32,7 +32,7 @@ export default function Feature({ locale, langName = 'en' }) {
         </div>
       </motion.div>
 
-      <div className='relative z-10 w-full md:w-10/12 mx-auto grid grid-cols-2 gap-5 place-items-center'>
+      <div className='relative z-10 w-full md:w-10/12 mx-auto grid grid-cols-2 gap-5 place-items-stretch'>
         {list.map((item, index) => {
           return (
             <motion.div
@@ -54,4 +54,4 @@ export default function Feature({ locale, langName = 'en' }) {
       </div>
     </section>
   );
-}
+            }
