@@ -30,18 +30,14 @@ export default function Feature({ locale, langName = 'en' }) {
 					<h3 className='font-bold text-3xl md:text-5xl bg-gradient-to-r from-base-content from-50% to-[#9c9c9c] md:text-center bg-clip-text text-transparent !leading-[1.25em]'>
 						{locale.h3}
 					</h3>
-
-					<h4 className='w-full md:w-10/12 mx-auto text-xl md:text-2xl text-base-content/80 md:text-center'>
-						{locale.description1}
-						<br />
-						{locale.description2}
-						<br />
-						{locale.description3}
-					</h4>
 				</div>
 			</motion.div>
 
-			<div className='relative z-10 w-full md:w-10/12 mx-auto grid grid-cols-1 md:grid-cols-3 gap-5'>
+			{/* PERUBAHAN DI SINI: 
+              Kelas 'grid-cols-1 md:grid-cols-2' diubah menjadi 'grid-cols-2' 
+              agar 2 kolom berlaku di semua ukuran layar.
+            */}
+			<div className='relative z-10 w-full md:w-10/12 mx-auto grid grid-cols-2 gap-5'>
 				{list.map((item, index) => {
 					return (
 						<motion.div
