@@ -54,4 +54,4 @@ export default function Feature({ locale, langName = 'en' }) {
       </div>
     </section>
   );
-            }
+}
