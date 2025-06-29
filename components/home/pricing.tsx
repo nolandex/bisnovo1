@@ -108,19 +108,17 @@ interface Product {
 }
 
 const productData: Product[] = [
-  // Website Products
+  // Website Products -> modalType: 'example'
   { name: 'Landing Page', price: 'Rp 20,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com', modalType: 'example' },
   { name: 'Profil Bisnis', price: 'Rp 20,000', superCategory: 'Website', category: 'profil_bisnis', categoryLabel: 'Profil Bisnis', imageUrl: 'https://images.unsplash.com/photo-1556740738-6b4a6d8b8b8b?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://profil-bisnis-demo.vercel.app', modalType: 'example' },
   { name: 'Link in Bio', price: 'Rp 20,000', superCategory: 'Website', category: 'personal', categoryLabel: 'Personal', imageUrl: 'https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=1472&auto=format&fit=crop', exampleUrl: 'https://linkinbio-demo.vercel.app', modalType: 'example' },
   { name: 'Digital Invitation', price: 'Rp 20,000', superCategory: 'Website', category: 'undangan', categoryLabel: 'Undangan', imageUrl: 'https://images.unsplash.com/photo-1587322849264-92d4734559e1?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://invitation-demo.vercel.app', modalType: 'example' },
   { name: 'Portfolio', price: 'Rp 20,000', superCategory: 'Website', category: 'portfolio', categoryLabel: 'Portfolio', imageUrl: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://portfolio-demo.vercel.app', modalType: 'example' },
   
-  // Sosmed Boost Products
+  // Sosmed Boost & Lainnya Products -> modalType: 'details'
   { name: 'Jasa Kelola IG', price: 'Rp 50,000', superCategory: 'Sosmed Boost', category: 'jasa_kelola', categoryLabel: 'Jasa Kelola', imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1374&auto=format&fit=crop', modalType: 'details' },
   { name: 'Jasa Desain Feed', price: 'Rp 30,000', superCategory: 'Sosmed Boost', category: 'jasa_desain', categoryLabel: 'Jasa Desain', imageUrl: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1471&auto=format&fit=crop', modalType: 'details' },
   { name: 'Iklan Meta (FB/IG)', price: 'Rp 100,000', superCategory: 'Sosmed Boost', category: 'jasa_ads', categoryLabel: 'Jasa Ads', imageUrl: 'https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=1470&auto=format&fit=crop', modalType: 'details' },
-
-  // Lainnya Products
   { name: 'Project Custom', price: 'Call Us', superCategory: 'Lainnya', category: 'custom', categoryLabel: 'Custom', imageUrl: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1470&auto=format&fit=crop', modalType: 'details' },
   { name: 'Konsultasi Digital', price: 'Free', superCategory: 'Lainnya', category: 'konsultasi', categoryLabel: 'Konsultasi', imageUrl: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1470&auto=format&fit=crop', modalType: 'details' },
 ];
@@ -191,7 +189,8 @@ export default function ServicesPage() {
   return (
     <div id='pricing' className='min-h-screen w-full pt-20 pb-8'>
       <div className='w-full'>
-        <div className='flex justify-center overflow-x-auto space-x-3 mb-4 pb-2 snap-x snap-mandatory px-2'>
+        {/* REVISED: Button container with flex-wrap for a stable layout */}
+        <div className='flex justify-center flex-wrap gap-3 mb-4 px-2'>
           <button onClick={() => setActiveSuperCategory('Website')} className={getButtonClasses(activeSuperCategory === 'Website')}>
             Website
           </button>
@@ -203,7 +202,8 @@ export default function ServicesPage() {
           </button>
         </div>
 
-        <div className='flex justify-center overflow-x-auto space-x-3 mb-8 pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 snap-x snap-mandatory px-2'>
+        {/* REVISED: Button container with flex-wrap for a stable layout */}
+        <div className='flex justify-center flex-wrap gap-3 mb-8 px-2'>
           {subCategories[activeSuperCategory] &&
             subCategories[activeSuperCategory].map((sub) => (
               <button
@@ -248,7 +248,7 @@ export default function ServicesPage() {
                 {product.modalType && (
                   <button
                     onClick={() => openModal(product.modalType, product)}
-                    aria-label='Lihat Contoh'
+                    aria-label='Lihat Rincian'
                     className={`btn btn-xs btn-square rounded-full flex items-center justify-center`}
                   >
                     <ExternalLink className='h-4 w-4' />
