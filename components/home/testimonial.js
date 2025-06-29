@@ -1,7 +1,5 @@
-// File: components/home/testimonial.jsx (atau file testimonial Anda)
-
 'use client';
-// Import untuk Swiper Slider
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -12,22 +10,16 @@ import { TestimonialsList } from '@/lib/testimonialsList';
 import { motion } from 'framer-motion';
 import { MdFeedback } from 'react-icons/md';
 
-// Nama fungsi diubah menjadi Testimonial
 export default function Testimonial({ locale, langName = 'en' }) {
 	let list = TestimonialsList[`TESTIMONIAL_${langName.toUpperCase()}`] || [];
+
 	return (
-		<section
-			id='testimonial'
-			className='relative py-10 md:py-20'
-		>
+		<section id='testimonial' className='relative py-10 md:py-20'>
 			<motion.div
 				initial={{ opacity: 0, y: 50 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				transition={{
-					duration: 0.5,
-				}}
+				transition={{ duration: 0.5 }}
 			>
-				{/* Bagian judul tidak diubah */}
 				<div className='relative z-10 flex flex-col gap-5 items-start md:items-center mb-10 mx-auto'>
 					<div className='relative inline-flex items-center justify-center gap-2 border-2 border-base-content px-5 md:px-10 py-1 md:py-3 rounded-full text-lg md:text-2xl font-semibold overflow-hidden group'>
 						<div className='inline-flex items-center justify-center gap-2 z-10'>
@@ -38,27 +30,13 @@ export default function Testimonial({ locale, langName = 'en' }) {
 					<h3 className='font-bold text-3xl md:text-5xl bg-gradient-to-r from-base-content from-50% to-[#9c9c9c] md:text-center bg-clip-text text-transparent !leading-[1.25em]'>
 						{locale.h3}
 					</h3>
-					<h4 className='w-full md:w-10/12 mx-auto text-xl md:text-2xl text-base-content/80 md:text-center'>
-						{locale.description1}
-						<a
-							title='feedback'
-							className='text-primary'
-							href='#'
-						>
-							{locale.description2}
-						</a>
-						{locale.description3}
-					</h4>
 				</div>
 			</motion.div>
 
-			{/* PERUBAHAN DI SINI: Tampilan kolom diubah menjadi Slider/Swiper */}
 			<motion.div
 				initial={{ opacity: 0, y: 50 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				transition={{
-					duration: 0.5,
-				}}
+				transition={{ duration: 0.5 }}
 				className='w-full'
 			>
 				<Swiper
@@ -70,18 +48,16 @@ export default function Testimonial({ locale, langName = 'en' }) {
 						768: { slidesPerView: 2 },
 						1024: { slidesPerView: 3 },
 					}}
-					className="w-full md:w-10/12 mx-auto pb-12" // Beri padding bawah untuk pagination
+					className='w-full md:w-10/12 mx-auto pb-12'
 				>
-					{list.map((item, index) => {
-						return (
-							<SwiperSlide key={index}>
-								<TestimonialCard
-									testimonialItem={item}
-									langName={langName}
-								/>
-							</SwiperSlide>
-						);
-					})}
+					{list.map((item, index) => (
+						<SwiperSlide key={index}>
+							<TestimonialCard
+								testimonialItem={item}
+								langName={langName}
+							/>
+						</SwiperSlide>
+					))}
 				</Swiper>
 			</motion.div>
 
