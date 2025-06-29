@@ -185,8 +185,14 @@ export default function ServicesPage() {
 
   return (
     <div className="min-h-screen w-full pt-20 pb-8">
-      <div className="w-full px-2 md:px-4">
-        <div className="flex justify-center overflow-x-auto space-x-3 mb-4 pb-2 snap-x snap-mandatory">
+       {/* ===============================================================
+         PERUBAHAN DI SINI:
+         Class "px-2 md:px-4" telah dihapus dari div di bawah ini
+         untuk menghilangkan padding kanan dan kiri.
+         ===============================================================
+       */}
+      <div className="w-full">
+        <div className="flex justify-center overflow-x-auto space-x-3 mb-4 pb-2 snap-x snap-mandatory px-2">
           <button
             onClick={() => setActiveSuperCategory("Bisnis")}
             className={getButtonClasses(activeSuperCategory === "Bisnis")}
@@ -201,7 +207,7 @@ export default function ServicesPage() {
           </button>
         </div>
 
-        <div className="flex justify-center overflow-x-auto space-x-3 mb-8 pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 snap-x snap-mandatory">
+        <div className="flex justify-center overflow-x-auto space-x-3 mb-8 pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 snap-x snap-mandatory px-2">
           <button
             onClick={() => setActiveSubCategory("all")}
             className={getButtonClasses(activeSubCategory === "all")}
@@ -218,13 +224,7 @@ export default function ServicesPage() {
             </button>
           ))}
         </div>
-
-        {/* ===============================================================
-          PERUBAHAN DI SINI:
-          Diubah dari "grid-cols-1 sm:grid-cols-2" menjadi "grid-cols-2"
-          agar selalu 2 kolom di semua ukuran layar.
-          ===============================================================
-        */}
+        
         <div className="grid grid-cols-2 gap-2">
           {filteredProducts.map((product) => (
             <div
