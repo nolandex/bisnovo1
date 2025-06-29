@@ -221,10 +221,10 @@ export default function ServicesPage() {
   }, []);
 
   const getCategoryButtonClasses = (isActive: boolean) => {
-    return `btn btn-sm md:btn-md btn-base rounded-full whitespace-nowrap ${
+    return `btn btn-sm md:btn-md btn-base rounded-full whitespace-nowrap px-4 py-2 transition-all duration-300 ${
       isActive
-        ? "border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100"
-        : "text-base-content hover:bg-base-100"
+        ? "border-none ring-1 ring-base-content/50 text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 shadow-md"
+        : "border border-base-content/20 text-base-content hover:bg-base-100/50 hover:shadow-sm"
     }`;
   };
 
@@ -233,7 +233,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen pt-20 pb-8">
       <div className="container max-w-4xl mx-auto px-4 sm:px-6">
-        <div className="flex overflow-x-auto space-x-4 mb-6 pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+        <div className="flex overflow-x-auto space-x-3 mb-8 pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 snap-x snap-mandatory">
           <button
             onClick={() => setActiveCategory("landing_page")}
             className={getCategoryButtonClasses(activeCategory === "landing_page")}
