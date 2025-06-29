@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-export default function Hero({ locale, CTALocale }) {
+export default function Hero({ locale }) {
   const [tilt, setTilt] = useState(45);
   const [duration, setDuration] = useState(0.8);
 
@@ -60,7 +60,7 @@ export default function Hero({ locale, CTALocale }) {
                 className='btn btn-sm md:btn-md btn-base border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 rounded-full'
                 href='#pricing'
               >
-                Inwindo
+                Produk
               </a>
               <a
                 title='Hubungi via WhatsApp'
@@ -94,30 +94,7 @@ export default function Hero({ locale, CTALocale }) {
         </motion.div>
       </section>
 
-      <div className='absolute w-[100%] left-[0] top-[10%] md:top-[20%] h-[300px]'>
-        <svg xmlns='http://www.w3.org/2000/svg' id='patternId' width='100%' height='100%'>
-          <defs>
-            <pattern
-              id='a'
-              patternUnits='userSpaceOnUse'
-              width='20'
-              height='20'
-              patternTransform='scale(3) rotate(0)'
-            >
-              <rect x='0' y='0' width='100%' height='100%' fill='hsla(0, 0%, 100%, 0)'></rect>
-              <path
-                d='M 10,-2.55e-7 V 20 Z M -1.1677362e-8,10 H 20 Z'
-                strokeWidth='0.5'
-                className='stroke-base-content/50'
-                fill='none'
-              ></path>
-            </pattern>
-          </defs>
-          <rect width='800%' height='800%' transform='translate(0,0)' fill='url(#a)'></rect>
-        </svg>
-        {/* Gradients removed as requested */}
-      </div>
+      {/* The background grid pattern has been removed as requested */}
     </>
   );
 }
-
