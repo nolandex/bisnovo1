@@ -1,38 +1,19 @@
 'use client';
-import { FaCheck } from 'react-icons/fa';
+import React from 'react';
 
-export default function PricingCard({ pricingItem = {} }) {
- 	return (
-		// PERUBAHAN 1: Kartu dijadikan flex container vertikal dan tinggi penuh (h-full)
-		// agar bisa menyesuaikan dengan kartu tertinggi di dalam grid.
-		<div className='relative border-2 border-base-content rounded-xl p-5 flex flex-col h-full'>
-			<h2 className='text-2xl font-bold mb-2'>{pricingItem.title}</h2>
-			<p className='text-base-content/80 mb-5'>{pricingItem.description}</p>
-			<div className='mb-5'>
-				<span className='text-4xl font-extrabold'>{pricingItem.price}</span>
-				<span className='text-base-content/80'>/{pricingItem.duration}</span>
+export default function FeatureCard({ featureItem = {} }) {
+	return (
+		// PERUBAHAN DI SINI:
+		// 1. `aspect-square` ditambahkan untuk membuat rasio 1:1 (kotak).
+		// 2. `justify-center` ditambahkan agar konten berada di tengah secara vertikal.
+		<div
+			className='w-full p-4 border-2 border-base-content rounded-xl flex flex-col items-center justify-center gap-2 transition-all duration-100 shadow-none hover:shadow-2xl hover:scale-110 bg-base-100 aspect-square'
+		>
+			<div className="text-center">
+				{featureItem.icon && React.createElement(featureItem.icon, { className: 'text-2xl mx-auto' })}
+				<h2 className='mt-2 text-base font-bold'>{featureItem.title}</h2>
+				<p className='text-xs'>{featureItem.description}</p>
 			</div>
-
-			{/* PERUBAHAN 2: Daftar fitur diberi 'flex-grow' agar mengisi ruang kosong
-			    dan mendorong tombol ke bawah. */}
-			<ul className='space-y-2 mb-10 flex-grow'>
-				{pricingItem.features &&
-					pricingItem.features.map((feature, featureIndex) => {
-						return (
-							<li
-								key={featureIndex}
-								className='flex items-center gap-2'
-							>
-								<FaCheck className='text-primary' /> {feature}
-							</li>
-						);
-					})}
-			</ul>
-			
-			{/* Tombol ini akan selalu berada di bagian bawah kartu */}
-			<button className='w-full text-center py-3 rounded-lg bg-primary text-primary-content font-semibold hover:bg-primary/80 transition-all'>
-				Choose Plan
-			</button>
 		</div>
 	);
 }
