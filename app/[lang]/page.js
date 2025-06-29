@@ -1,3 +1,5 @@
+// File: app/[lang]/page.jsx (atau file halaman utama Anda)
+
 import { defaultLocale, getDictionary } from '@/lib/i18n';
 
 import Hero from '@/components/home/hero';
@@ -5,7 +7,8 @@ import Feature from '@/components/home/feature';
 import Pricing from '@/components/home/pricing';
 import Testimonial from '@/components/home/testimonial';
 import Faq from '@/components/home/faq';
-import Cta from '@/components/home/cta';
+// import Cta from '@/components/home/cta'; // Import Cta dihapus
+
 export default async function Home({ params }) {
 	const langName = params.lang || defaultLocale;
 	const dict = await getDictionary(langName); // 获取内容
@@ -16,7 +19,6 @@ export default async function Home({ params }) {
 				locale={dict.Hero}
 				CTALocale={dict.CTAButton}
 			/>
-			{/* Posisi Pricing dan Feature telah ditukar */}
 			<Pricing
 				locale={dict.Pricing}
 				langName={langName}
@@ -33,10 +35,7 @@ export default async function Home({ params }) {
 				locale={dict.Faq}
 				langName={langName}
 			/>
-			<Cta
-				locale={dict.CTA}
-				CTALocale={dict.CTAButton}
-			/>
+			{/* Komponen Cta telah dihapus dari sini */}
 		</div>
 	);
 }
