@@ -30,13 +30,12 @@ export default function Feature({ locale, langName = 'en' }) {
 					<h3 className='font-bold text-3xl md:text-5xl bg-gradient-to-r from-base-content from-50% to-[#9c9c9c] md:text-center bg-clip-text text-transparent !leading-[1.25em]'>
 						{locale.h3}
 					</h3>
+                    
+					{/* Sub-headline (h4) telah dihapus dari sini */}
 				</div>
 			</motion.div>
 
-			{/* PERUBAHAN DI SINI: 
-              Kelas 'grid-cols-1 md:grid-cols-2' diubah menjadi 'grid-cols-2' 
-              agar 2 kolom berlaku di semua ukuran layar.
-            */}
+			{/* Layout grid dibuat 2 kolom di semua ukuran layar */}
 			<div className='relative z-10 w-full md:w-10/12 mx-auto grid grid-cols-2 gap-5'>
 				{list.map((item, index) => {
 					return (
