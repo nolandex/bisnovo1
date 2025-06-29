@@ -19,14 +19,10 @@ interface ModalProps {
   size?: "sm" | "md" | "lg" | "full";
 }
 
-// ===============================================================
-// PERUBAHAN UTAMA ADA DI KOMPONEN MODAL INI
-// ===============================================================
 function Modal({ isOpen, onClose, children, size = "full" }: ModalProps) {
   const { theme } = useTheme();
   if (!isOpen) return null;
 
-  // Mengembalikan border-radius menjadi seragam di semua sisi
   const sizeClasses = {
     sm: "max-w-sm rounded-xl",
     md: "max-w-md rounded-xl",
@@ -34,12 +30,9 @@ function Modal({ isOpen, onClose, children, size = "full" }: ModalProps) {
     full: "max-w-full w-full h-[90vh] rounded-xl",
   }[size];
   
-  // Padding internal tetap 0 agar iframe bisa full di dalam modal
   const contentPadding = size === 'full' ? 'p-0' : 'p-4';
 
   return (
-    // 1. Container diberi padding 'p-4' untuk margin di sekeliling modal.
-    // 2. Posisi 'items-center' digunakan agar modal selalu di tengah.
     <div className={`fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4`}>
       <div
         className={`${sizeClasses} ${
@@ -150,19 +143,38 @@ export default function ServicesPage() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [activeSuperCategory, setActiveSuperCategory] = useState<Product["superCategory"]>("Bisnis");
-  const [activeSubCategory, setActiveSubCategory] = useState<Product["category"] | "all">("all");
+  
+  // ===============================================================
+  // PERUBAHAN 1: State awal sub-kategori diubah
+  // Menghapus state "all" dan langsung set ke sub-kategori pertama
+  // ===============================================================
+  const [activeSubCategory, setActiveSubCategory] = useState<Product["category"]>("landing_page");
+  
   const [activeModal, setActiveModal] = useState<Product["modalType"] | null>(null);
   const [modalProduct, setModalProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     setMounted(true);
-    setActiveSubCategory("all");
-  }, [activeSuperCategory]);
+  }, []);
 
+  // ===============================================================
+  // PERUBAHAN 2: Logika saat super-kategori diganti
+  // Saat super-kategori baru dipilih, otomatis aktifkan sub-kategori pertamanya
+  // ===============================================================
+  useEffect(() => {
+    if (mounted) {
+      const firstSubCategory = subCategories[activeSuperCategory][0]?.value;
+      if (firstSubCategory) {
+        setActiveSubCategory(firstSubCategory);
+      }
+    }
+  }, [activeSuperCategory, mounted]);
+
+  // Logika filter disederhanakan karena tidak ada lagi state "all"
   const filteredProducts = productData.filter(
     (product) =>
       product.superCategory === activeSuperCategory &&
-      (activeSubCategory === "all" || product.category === activeSubCategory)
+      product.category === activeSubCategory
   );
 
   const openModal = useCallback((type: Product["modalType"], product?: Product) => {
@@ -198,12 +210,7 @@ export default function ServicesPage() {
         </div>
 
         <div className="flex justify-center overflow-x-auto space-x-3 mb-8 pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 snap-x snap-mandatory px-2">
-          <button
-            onClick={() => setActiveSubCategory("all")}
-            className={getButtonClasses(activeSubCategory === "all")}
-          >
-            Semua
-          </button>
+          {/* Tombol "Semua" telah dihapus dari sini */}
           {subCategories[activeSuperCategory].map((sub) => (
             <button
               key={sub.value}
@@ -215,13 +222,16 @@ export default function ServicesPage() {
           ))}
         </div>
         
-        <div className="grid grid-cols-2 gap-2 px-1">
+        {/* ===============================================================
+          PERUBAHAN 3: Margin kanan-kiri (px-1) dihapus dari grid
+          =============================================================== */}
+        <div className="grid grid-cols-2 gap-2">
           {filteredProducts.map((product) => (
             <div
               key={product.name}
               className={`flex flex-col rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${
                 theme === "dark" ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"
-              } p-3`}
+              } p-2`} // Padding internal kartu dikurangi sedikit menjadi p-2
             >
               <div className="flex justify-between items-start mb-2">
                 <h3 className={`font-bold leading-tight text-sm ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{product.name}</h3>
@@ -230,13 +240,16 @@ export default function ServicesPage() {
 
               <div className="flex-grow mb-3">
                 {product.imageUrl && (
-                  <div className="relative w-full h-32"><Image src={product.imageUrl} alt={`${product.name} preview`} fill className="object-cover rounded-md"/></div>
+                  <div className="relative w-full h-28"><Image src={product.imageUrl} alt={`${product.name} preview`} fill className="object-cover rounded-md"/></div>
                 )}
               </div>
               
+              {/* ===============================================================
+                PERUBAHAN 4: Tombol diperkecil menggunakan class 'btn-xs'
+                =============================================================== */}
               <div className="flex gap-2 mt-auto items-center">
                 <button
-                  className={`flex-1 btn btn-sm h-9 border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 rounded-full`}
+                  className={`flex-1 btn btn-xs border-none hover:ring-1 ring-base-content text-base-100 hover:text-base-content bg-base-content hover:bg-base-100 rounded-full`}
                 >
                   Bayar
                 </button>
@@ -244,7 +257,7 @@ export default function ServicesPage() {
                   <button
                     onClick={() => openModal(product.modalType, product)}
                     aria-label="Lihat Contoh"
-                    className={`btn btn-sm btn-square h-9 w-9 rounded-full flex items-center justify-center`}
+                    className={`btn btn-xs btn-square rounded-full flex items-center justify-center`}
                   >
                     <ExternalLink className="h-4 w-4" />
                   </button>
