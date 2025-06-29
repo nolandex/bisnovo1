@@ -19,24 +19,28 @@ interface ModalProps {
   size?: "sm" | "md" | "lg" | "full";
 }
 
+// ===============================================================
+// PERUBAHAN UTAMA ADA DI KOMPONEN MODAL INI
+// ===============================================================
 function Modal({ isOpen, onClose, children, size = "full" }: ModalProps) {
   const { theme } = useTheme();
   if (!isOpen) return null;
 
-  // Ukuran 'full' diatur ke 90vh dan menempel di bawah (mobile) atau tengah (desktop)
+  // Mengembalikan border-radius menjadi seragam di semua sisi
   const sizeClasses = {
     sm: "max-w-sm rounded-xl",
     md: "max-w-md rounded-xl",
     lg: "max-w-2xl rounded-xl",
-    full: "max-w-full w-full h-[90vh] rounded-t-2xl md:rounded-xl",
+    full: "max-w-full w-full h-[90vh] rounded-xl",
   }[size];
   
-  // Menghilangkan padding di dalam modal saat ukurannya 'full'
+  // Padding internal tetap 0 agar iframe bisa full di dalam modal
   const contentPadding = size === 'full' ? 'p-0' : 'p-4';
 
   return (
-    // Container diubah untuk menempelkan modal di bawah (items-end) pada mobile
-    <div className={`fixed inset-0 bg-black bg-opacity-50 flex justify-center z-50 items-end md:items-center`}>
+    // 1. Container diberi padding 'p-4' untuk margin di sekeliling modal.
+    // 2. Posisi 'items-center' digunakan agar modal selalu di tengah.
+    <div className={`fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4`}>
       <div
         className={`${sizeClasses} ${
           theme === "dark" ? "bg-gray-800" : "bg-white"
@@ -57,6 +61,7 @@ function Modal({ isOpen, onClose, children, size = "full" }: ModalProps) {
     </div>
   );
 }
+
 
 function OrderingInstructions() {
   const { theme } = useTheme();
