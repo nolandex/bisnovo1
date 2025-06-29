@@ -1,37 +1,22 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
+
 export default function FeatureCard({ featureItem = {} }) {
-	const [tiltStyle, setTiltStyle] = useState({});
-
-	// const handleMouseMove = (e) => {
-	// 	const { offsetWidth: width, offsetHeight: height } = e.currentTarget;
-	// 	const { offsetX: x, offsetY: y } = e.nativeEvent;
-
-	// 	const rotateX = (y / height - 0.5) * 50; // 控制倾斜角度范围
-	// 	const rotateY = (x / width - 0.5) * -50;
-
-	// 	setTiltStyle({
-	// 		transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`
-	// 	});
-	// };
-
-	// const handleMouseLeave = () => {
-	// 	setTiltStyle({
-	// 		transform: 'rotateX(0deg) rotateY(0deg)',
-	// 		transition: 'transform 0.2s ease-out'
-	// 	});
-	// };
-
 	return (
+		// PERUBAHAN:
+		// 1. Ditambahkan `aspect-w-1 aspect-h-1` untuk mencoba membuat kartu persegi.
+		// 2. Padding tetap p-4.
 		<div
-			className='w-full min-h-48 p-5 border-2 border-base-content rounded-xl flex flex-col items-center gap-2 transition-all duration-100 shadow-none hover:shadow-2xl hover:scale-110 bg-base-100'
-			// onMouseMove={handleMouseMove}
-			// onMouseLeave={handleMouseLeave}
-			// style={tiltStyle}
+			className='w-full p-4 border-2 border-base-content rounded-xl flex flex-col items-center justify-center gap-2 transition-all duration-100 shadow-none hover:shadow-2xl hover:scale-110 bg-base-100 aspect-w-1 aspect-h-1'
 		>
-			{featureItem.icon && React.createElement(featureItem.icon, { className: 'text-3xl' })}
-			<h2 className='text-xl font-bold text-center'>{featureItem.title}</h2>
-			<p className='text-center'>{featureItem.description}</p>
+			{/* Ukuran ikon disesuaikan */}
+			{featureItem.icon && React.createElement(featureItem.icon, { className: 'text-2xl' })}
+
+			{/* Ukuran judul diperkecil */}
+			<h2 className='text-base font-bold text-center'>{featureItem.title}</h2>
+			
+			{/* Ukuran deskripsi diperkecil */}
+			<p className='text-center text-xs'>{featureItem.description}</p>
 		</div>
 	);
 }
