@@ -8,7 +8,7 @@ export default function Feature({ locale, langName = 'en' }) {
 	return (
 		<section
 			id='faq'
-			className='relative py-10 md:py-20'
+			className='relative py-10 md:py-20 overflow-hidden' // Menambahkan overflow-hidden untuk kerapian
 		>
 			<motion.div
 				initial={{ opacity: 0, y: 50 }}
@@ -17,20 +17,17 @@ export default function Feature({ locale, langName = 'en' }) {
 					duration: 0.5,
 				}}
 			>
-				<div className='relative z-10 flex flex-col gap-5 items-start md:items-center mb-10 mx-auto'>
-					<div className='relative inline-flex items-center justify-center gap-2 border-2 border-base-content px-5 md:px-10 py-1 md:py-3 rounded-full text-lg md:text-2xl font-semibold overflow-hidden group'>
-						<div className='inline-flex items-center justify-center gap-2 z-10'>
-							<FaQuestionCircle /> <h2>{locale.h2}</h2>
-						</div>
-						<div className='absolute w-0 h-full bg-base-content z-[0]'></div>
+				{/* REVISI: Header dibuat lebih ringkas dan selalu di tengah */}
+				<div className='relative z-10 flex flex-col gap-3 items-center mb-8 mx-auto text-center'>
+					{/* REVISI: Ukuran "pill" diperkecil */}
+					<div className='inline-flex items-center justify-center gap-2 border-2 border-base-content px-4 py-1 rounded-full text-base font-semibold'>
+						<FaQuestionCircle /> <h2>{locale.h2}</h2>
 					</div>
 
-					<h3 className='font-bold text-3xl md:text-5xl bg-gradient-to-r from-base-content from-50% to-[#9c9c9c] md:text-center bg-clip-text text-transparent !leading-[1.25em]'>
+					{/* REVISI: Ukuran font diperkecil dan gradien dihapus */}
+					<h3 className='font-bold text-2xl md:text-4xl text-base-content !leading-tight'>
 						{locale.h3}
 					</h3>
-
-					{/* PERUBAHAN DI SINI: Sub-headline (h4) telah dihapus */}
-					{/* <h4 className='...'>{locale.description}</h4> */}
 				</div>
 			</motion.div>
 
@@ -39,20 +36,24 @@ export default function Feature({ locale, langName = 'en' }) {
 				whileInView={{ opacity: 1, y: 0 }}
 				transition={{
 					duration: 0.5,
+					delay: 0.2
 				}}
 			>
-				<div className='relative z-10 w-full md:w-10/12 mx-auto flex flex-col gap-5'>
+				{/* REVISI: Jarak antar item FAQ diperkecil */}
+				<div className='relative z-10 w-full md:w-10/12 lg:w-8/12 mx-auto flex flex-col gap-3'>
 					{list.map((item, index) => {
 						return (
+							// REVISI: Desain accordion diubah menjadi card-based yang lebih modern
 							<div
 								key={index}
 								tabIndex={0}
-								className='collapse collapse-arrow bg-base-200 border-b-[1px] border-base-content rounded-none bg-transparent'
+								className='collapse collapse-plus bg-base-200/50 rounded-lg border border-base-content/10'
 							>
-								<div className={`collapse-title text-xl font-medium ${langName === 'ar' ? 'text-right' : ''}`}>
+								{/* REVISI: Font judul pertanyaan diperkecil */}
+								<div className={`collapse-title text-base font-medium ${langName === 'ar' ? 'text-right' : ''}`}>
 									{item.question}
 								</div>
-								<div className={`collapse-content ${langName === 'ar' ? 'text-right' : ''}`}>
+								<div className={`collapse-content text-sm text-base-content/80 ${langName === 'ar' ? 'text-right' : ''}`}>
 									<p>{item.answer}</p>
 								</div>
 							</div>
@@ -61,8 +62,9 @@ export default function Feature({ locale, langName = 'en' }) {
 				</div>
 			</motion.div>
 
-			<div className='hidden md:block absolute left-[50%] top-[30%] z-0'>
-				<div className='absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]'></div>
+			{/* REVISI: Elemen dekoratif diperkecil dan diposisikan ulang */}
+			<div className='hidden md:block absolute left-[50%] top-[20%] z-0'>
+				<div className='absolute h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.10),rgba(255,255,255,0))]'></div>
 			</div>
 		</section>
 	);
