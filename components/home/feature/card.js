@@ -3,20 +3,17 @@ import React from 'react';
 
 export default function FeatureCard({ featureItem = {} }) {
 	return (
-		// PERUBAHAN:
-		// 1. Ditambahkan `aspect-w-1 aspect-h-1` untuk mencoba membuat kartu persegi.
-		// 2. Padding tetap p-4.
+		// PERUBAHAN DI SINI:
+		// 1. `aspect-square` ditambahkan untuk membuat rasio 1:1 (kotak).
+		// 2. `justify-center` ditambahkan agar konten berada di tengah secara vertikal.
 		<div
-			className='w-full p-4 border-2 border-base-content rounded-xl flex flex-col items-center justify-center gap-2 transition-all duration-100 shadow-none hover:shadow-2xl hover:scale-110 bg-base-100 aspect-w-1 aspect-h-1'
+			className='w-full p-4 border-2 border-base-content rounded-xl flex flex-col items-center justify-center gap-2 transition-all duration-100 shadow-none hover:shadow-2xl hover:scale-110 bg-base-100 aspect-square'
 		>
-			{/* Ukuran ikon disesuaikan */}
-			{featureItem.icon && React.createElement(featureItem.icon, { className: 'text-2xl' })}
-
-			{/* Ukuran judul diperkecil */}
-			<h2 className='text-base font-bold text-center'>{featureItem.title}</h2>
-			
-			{/* Ukuran deskripsi diperkecil */}
-			<p className='text-center text-xs'>{featureItem.description}</p>
+			<div className="text-center">
+				{featureItem.icon && React.createElement(featureItem.icon, { className: 'text-2xl mx-auto' })}
+				<h2 className='mt-2 text-base font-bold'>{featureItem.title}</h2>
+				<p className='text-xs'>{featureItem.description}</p>
+			</div>
 		</div>
 	);
 }
