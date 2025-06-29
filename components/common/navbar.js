@@ -34,7 +34,9 @@ export default function Navbar() {
 				return link;
 			});
 			
-			const linksToRemove = ['faq', 'testimoni', 'feature']; 
+			// --- PERUBAHAN DI SINI ---
+			// 'about' ditambahkan ke dalam daftar link yang akan dihapus.
+			const linksToRemove = ['faq', 'testimoni', 'feature', 'about']; 
 			
 			let filteredLinks = modifiedLinks.filter(link => 
 				!linksToRemove.includes(link.name.toLowerCase())
@@ -61,8 +63,6 @@ export default function Navbar() {
 
 
 	return (
-		// --- PERBAIKAN DI SINI ---
-		// Padding vertikal (py) dan margin bottom (mb) dihilangkan/dikurangi
 		<header className='w-full relative z-50 bg-base-100 px-5 container mx-auto flex justify-between items-center'>
 			{/* Logo dan Nama Brand */}
 			<a
