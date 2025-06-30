@@ -12,7 +12,6 @@ const SwiperSlide = dynamic(() => import('swiper/react').then((mod) => mod.Swipe
 
 import 'swiper/css';
 
-// Komponen Modal dan OrderingInstructions dikembalikan seperti semula
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -97,7 +96,6 @@ function OrderingInstructions() {
   );
 }
 
-// Data produk dan kategori dikembalikan seperti semula
 interface Product {
   name: string;
   price: string;
@@ -110,16 +108,39 @@ interface Product {
 }
 
 const productData: Product[] = [
-  { name: 'Landing Page', price: 'Rp 20,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com', modalType: 'example' },
-  { name: 'Profil Bisnis', price: 'Rp 20,000', superCategory: 'Website', category: 'profil_bisnis', categoryLabel: 'Profil Bisnis', imageUrl: 'https://images.unsplash.com/photo-1556740738-6b4a6d8b8b8b?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://profil-bisnis-demo.vercel.app', modalType: 'example' },
-  { name: 'Link in Bio', price: 'Rp 20,000', superCategory: 'Website', category: 'personal', categoryLabel: 'Personal', imageUrl: 'https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=1472&auto=format&fit=crop', exampleUrl: 'https://linkinbio-demo.vercel.app', modalType: 'example' },
-  { name: 'Digital Invitation', price: 'Rp 20,000', superCategory: 'Website', category: 'undangan', categoryLabel: 'Undangan', imageUrl: 'https://images.unsplash.com/photo-1587322849264-92d4734559e1?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://invitation-demo.vercel.app', modalType: 'example' },
-  { name: 'Portfolio', price: 'Rp 20,000', superCategory: 'Website', category: 'portfolio', categoryLabel: 'Portfolio', imageUrl: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://portfolio-demo.vercel.app', modalType: 'example' },
-  { name: 'Jasa Kelola IG', price: 'Rp 50,000', superCategory: 'Sosmed Boost', category: 'jasa_kelola', categoryLabel: 'Jasa Kelola', imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1374&auto=format&fit=crop', modalType: 'details' },
-  { name: 'Jasa Desain Feed', price: 'Rp 30,000', superCategory: 'Sosmed Boost', category: 'jasa_desain', categoryLabel: 'Jasa Desain', imageUrl: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1471&auto=format&fit=crop', modalType: 'details' },
-  { name: 'Iklan Meta (FB/IG)', price: 'Rp 100,000', superCategory: 'Sosmed Boost', category: 'jasa_ads', categoryLabel: 'Jasa Ads', imageUrl: 'https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=1470&auto=format&fit=crop', modalType: 'details' },
-  { name: 'Project Custom', price: 'Call Us', superCategory: 'Lainnya', category: 'custom', categoryLabel: 'Custom', imageUrl: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1470&auto=format&fit=crop', modalType: 'details' },
-  { name: 'Konsultasi Digital', price: 'Free', superCategory: 'Lainnya', category: 'konsultasi', categoryLabel: 'Konsultasi', imageUrl: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1470&auto=format&fit=crop', modalType: 'details' },
+  // Website - Landing Page (10 products)
+  { name: 'Landing Page Basic', price: 'Rp 20,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com', modalType: 'example' },
+  { name: 'Landing Page Pro', price: 'Rp 30,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com/pro', modalType: 'example' },
+  { name: 'Landing Page Premium', price: 'Rp 50,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com/premium', modalType: 'example' },
+  { name: 'Landing Page E-commerce', price: 'Rp 25,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com/ecommerce', modalType: 'example' },
+  { name: 'Landing Page Business', price: 'Rp 35,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com/business', modalType: 'example' },
+  { name: 'Landing Page Startup', price: 'Rp 15,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com/startup', modalType: 'example' },
+  { name: 'Landing Page Enterprise', price: 'Rp 60,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com/enterprise', modalType: 'example' },
+  { name: 'Landing Page Personal', price: 'Rp 18,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com/personal', modalType: 'example' },
+  { name: 'Landing Page Portfolio', price: 'Rp 22,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com/portfolio', modalType: 'example' },
+  { name: 'Landing Page Event', price: 'Rp 28,000', superCategory: 'Website', category: 'landing_page', categoryLabel: 'Landing Page', imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://unbounce.com/event', modalType: 'example' },
+  
+  // Website - Profil Bisnis (3 products)
+  { name: 'Profil Bisnis Standard', price: 'Rp 20,000', superCategory: 'Website', category: 'profil_bisnis', categoryLabel: 'Profil Bisnis', imageUrl: 'https://images.unsplash.com/photo-1556740738-6b4a6d8b8b8b?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://profil-bisnis-demo.vercel.app', modalType: 'example' },
+  { name: 'Profil Bisnis Pro', price: 'Rp 30,000', superCategory: 'Website', category: 'profil_bisnis', categoryLabel: 'Profil Bisnis', imageUrl: 'https://images.unsplash.com/photo-1556740738-6b4a6d8b8b8b?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://profil-bisnis-pro.vercel.app', modalType: 'example' },
+  { name: 'Profil Bisnis Premium', price: 'Rp 40,000', superCategory: 'Website', category: 'profil_bisnis', categoryLabel: 'Profil Bisnis', imageUrl: 'https://images.unsplash.com/photo-1556740738-6b4a6d8b8b8b?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://profil-bisnis-premium.vercel.app', modalType: 'example' },
+  
+  // Website - Portfolio (3 products)
+  { name: 'Portfolio Basic', price: 'Rp 20,000', superCategory: 'Website', category: 'portfolio', categoryLabel: 'Portfolio', imageUrl: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://portfolio-demo.vercel.app', modalType: 'example' },
+  { name: 'Portfolio Pro', price: 'Rp 30,000', superCategory: 'Website', category: 'portfolio', categoryLabel: 'Portfolio', imageUrl: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://portfolio-pro.vercel.app', modalType: 'example' },
+  { name: 'Portfolio Premium', price: 'Rp 40,000', superCategory: 'Website', category: 'portfolio', categoryLabel: 'Portfolio', imageUrl: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1470&auto=format&fit=crop', exampleUrl: 'https://portfolio-premium.vercel.app', modalType: 'example' },
+  
+  // Sosmed Boost (5 products, no subcategories)
+  { name: 'Instagram Boost', price: 'Rp 50,000', superCategory: 'Sosmed Boost', category: 'sosmed_boost', categoryLabel: 'Sosmed Boost', imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1374&auto=format&fit=crop', modalType: 'details' },
+  { name: 'TikTok Boost', price: 'Rp 50,000', superCategory: 'Sosmed Boost', category: 'sosmed_boost', categoryLabel: 'Sosmed Boost', imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1374&auto=format&fit=crop', modalType: 'details' },
+  { name: 'Facebook Boost', price: 'Rp 50,000', superCategory: 'Sosmed Boost', category: 'sosmed_boost', categoryLabel: 'Sosmed Boost', imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1374&auto=format&fit=crop', modalType: 'details' },
+  { name: 'Instagram Ads', price: 'Rp 100,000', superCategory: 'Sosmed Boost', category: 'sosmed_boost', categoryLabel: 'Sosmed Boost', imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1374&auto=format&fit=crop', modalType: 'details' },
+  { name: 'YouTube Boost', price: 'Rp 75,000', superCategory: 'Sosmed Boost', category: 'sosmed_boost', categoryLabel: 'Sosmed Boost', imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1374&auto=format&fit=crop', modalType: 'details' },
+  
+  // Lainnya (3 products, no subcategories)
+  { name: 'Desain Instagram', price: 'Rp 30,000', superCategory: 'Lainnya', category: 'lainnya', categoryLabel: 'Lainnya', imageUrl: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1471&auto=format&fit=crop', modalType: 'details' },
+  { name: 'Promosi Video', price: 'Rp 50,000', superCategory: 'Lainnya', category: 'lainnya', categoryLabel: 'Lainnya', imageUrl: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1470&auto=format&fit=crop', modalType: 'details' },
+  { name: 'Jasa Iklan', price: 'Rp 100,000', superCategory: 'Lainnya', category: 'lainnya', categoryLabel: 'Lainnya', imageUrl: 'https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=1470&auto=format&fit=crop', modalType: 'details' },
 ];
 
 const subCategories: { [key in Product['superCategory']]: { value: string; label: string }[] } = {
@@ -127,20 +148,14 @@ const subCategories: { [key in Product['superCategory']]: { value: string; label
     { value: 'landing_page', label: 'Landing Page' },
     { value: 'profil_bisnis', label: 'Profil Bisnis' },
     { value: 'portfolio', label: 'Portfolio' },
-    { value: 'undangan', label: 'Undangan' },
-    { value: 'personal', label: 'Personal' },
   ],
   'Sosmed Boost': [
-    { value: 'jasa_kelola', label: 'Jasa Kelola' },
-    { value: 'jasa_desain', label: 'Jasa Desain' },
-    { value: 'jasa_ads', label: 'Jasa Ads' },
+    { value: 'sosmed_boost', label: 'Sosmed Boost' },
   ],
   Lainnya: [
-    { value: 'custom', label: 'Custom' },
-    { value: 'konsultasi', label: 'Konsultasi' },
+    { value: 'lainnya', label: 'Lainnya' },
   ],
 };
-
 
 export default function ServicesPage() {
   const { theme } = useTheme();
@@ -182,11 +197,9 @@ export default function ServicesPage() {
   return (
     <div id='pricing' className='min-h-screen w-full pt-20 pb-8'>
       <div className='w-full'>
-        
-        {/* === PERUBAHAN HANYA DI BAGIAN INI === */}
-        {/* Dropdown Kategori dan Sub-Kategori digabung dalam satu baris */}
-        <div className='flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 px-2'>
-          <div className="w-full sm:w-auto">
+        {/* Dropdown Kategori dan Sub-Kategori dalam satu baris horizontal */}
+        <div className='flex flex-row justify-center items-center gap-4 mb-8 px-2'>
+          <div className="w-full sm:w-48">
             <select 
               className="select select-bordered w-full" 
               value={activeSuperCategory} 
@@ -199,7 +212,7 @@ export default function ServicesPage() {
             </select>
           </div>
 
-          <div className="w-full sm:w-auto">
+          <div className="w-full sm:w-48">
             <select 
               className="select select-bordered w-full" 
               value={activeSubCategory} 
@@ -212,8 +225,6 @@ export default function ServicesPage() {
             </select>
           </div>
         </div>
-        {/* === BATAS AKHIR PERUBAHAN === */}
-
 
         <div className='grid grid-cols-2 gap-2'>
           {filteredProducts.map((product) => (
@@ -275,4 +286,4 @@ export default function ServicesPage() {
       </div>
     </div>
   );
-}
+   }
