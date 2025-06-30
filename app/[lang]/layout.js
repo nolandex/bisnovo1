@@ -4,39 +4,41 @@ import Navbar from '@/components/common/navbar';
 import Footer from '@/components/common/footer';
 
 export async function generateMetadata({ params }) {
-  const paramLang = params?.lang;
-  const lang = paramLang && locales.includes(paramLang) ? paramLang : defaultLocale;
+	const paramLang = params?.lang;
+	console.log('获取到的语言参数:', paramLang);
 
-  if (!SiteConfig[lang]) {
-    console.error(`Language config not found: ${lang}`);
-    return {
-      title: SiteConfig[defaultLocale].name,
-    };
-  }
+	const lang = paramLang && locales.includes(paramLang) ? paramLang : defaultLocale;
 
-  return {
-    title: SiteConfig[lang].name,
-    description: SiteConfig[lang].description,
-    keywords: SiteConfig[lang].keywords,
-    authors: SiteConfig[lang].authors,
-    creator: SiteConfig[lang].creator,
-    icons: SiteConfig[lang].icons,
-    metadataBase: SiteConfig[lang].metadataBase,
-    openGraph: SiteConfig[lang].openGraph,
-    twitter: SiteConfig[lang].twitter,
-  };
+	if (!SiteConfig[lang]) {
+		console.error(`未找到语言配置: ${lang}`);
+		return {
+			title: SiteConfig[defaultLocale].name,
+		};
+	}
+
+	return {
+		title: SiteConfig[lang].name,
+		description: SiteConfig[lang].description,
+		keywords: SiteConfig[lang].keywords,
+		authors: SiteConfig[lang].authors,
+		creator: SiteConfig[lang].creator,
+		icons: SiteConfig[lang].icons,
+		metadataBase: SiteConfig[lang].metadataBase,
+		openGraph: SiteConfig[lang].openGraph,
+		twitter: SiteConfig[lang].twitter,
+	};
 }
 
 export default function LangLayout({ children, params }) {
-  const lang = params?.lang || defaultLocale;
+	// 获取当前语言
+	const lang = params?.lang || defaultLocale;
 
-  return (
-    <html lang={lang} data-theme="corporate">
-      <body>
-        <Navbar lang={lang} />
-        <div className="px-5 pt-16">{children}</div>
-        <Footer lang={lang} />
-      </body>
-    </html>
-  );
+	return (
+		<>
+			<Navbar lang={lang} />
+            {/* --- PERUBAHAN DI BARIS INI --- */}
+			<div className='px-5 pt-16'>{children}</div> 
+			<Footer lang={lang} />
+		</>
+	);
 }
