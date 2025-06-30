@@ -6,6 +6,8 @@ import { useTheme } from 'next-themes';
 import { ExternalLink, X } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { motion } from 'framer-motion'; // <-- IMPORT DITAMBAHKAN
+import { MdOutlineFeaturedPlayList } from 'react-icons/md'; // <-- IMPORT DITAMBAHKAN
 
 const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), { ssr: false });
 const SwiperSlide = dynamic(() => import('swiper/react').then((mod) => mod.SwiperSlide), { ssr: false });
@@ -182,10 +184,29 @@ export default function ServicesPage() {
   return (
     <div id='pricing' className='min-h-screen w-full pt-20 pb-8'>
       <div className='w-full'>
+        {/* === KODE JUDUL & SUBHEADLINE DITAMBAHKAN DI SINI === */}
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+            duration: 0.5,
+            }}
+        >
+            <div className='relative z-10 flex flex-col gap-5 items-start md:items-center mb-10 mx-auto'>
+                <div className='relative inline-flex items-center justify-center gap-2 border-2 border-base-content px-5 md:px-10 py-1 md:py-3 rounded-full text-lg md:text-2xl font-semibold overflow-hidden hover:bg-base-content hover:text-base-100 transition-all'>
+                    <div className='inline-flex items-center justify-center gap-2 z-10'>
+                    <MdOutlineFeaturedPlayList /> <h2>Layanan & Harga</h2>
+                    </div>
+                    <div className='absolute w-0 h-full bg-base-content z-[0]'></div>
+                </div>
+                <h3 className='font-bold text-2xl md:text-4xl bg-gradient-to-r from-base-content from-50% to-[#9c9c9c] md:text-center bg-clip-text text-transparent !leading-[1.25em]'>
+                    Temukan Solusi Digital yang Tepat untuk Bisnis Anda
+                </h3>
+            </div>
+        </motion.div>
+        {/* === BATAS AKHIR KODE YANG DITAMBAHKAN === */}
         
-        {/* REVISED: Layout diubah menjadi dropdown untuk navigasi yang ringkas */}
         <div className='flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 px-2'>
-          {/* Kategori Dropdown */}
           <div className="w-full sm:w-52">
             <select 
               className="select select-bordered w-full" 
@@ -199,7 +220,6 @@ export default function ServicesPage() {
             </select>
           </div>
 
-          {/* Sub-Kategori Dropdown */}
           <div className="w-full sm:w-52">
             <select 
               className="select select-bordered w-full" 
