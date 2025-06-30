@@ -1,11 +1,11 @@
 {
 	"Hero": {
-		"h1": "快速制作落地页",
-		"h2": "这是一个免费、开源且功能强大的落地页模板，适用于SaaS项目，它将帮助您更快地启动您的创业项目。"
+		"h1": "Bangun Bisnis Profesional anda",
+		"h2": "Tingkatkan Kredibilitas, Raih Kepercayaan, dan Jadilah Pilihan Utama Pelanggan"
 	},
 	"Feature": {
-		"h2": "Feature",
-		"h3": "乘风-落地页模板的特点",
+		"h2": "Kenapa Bisnovo",
+		"h3": "Keunggulan kami dari yang lain ",
 		"description1": "出色的落地页模板。",
 		"description2": "基于Next.JS、DaisyUI、TailwindCSS和其他强大的库。",
 		"description3": "完全开源且完全免费。"
@@ -19,14 +19,14 @@
 	},
 	"Testimonial": {
 		"h2": "Testimonial",
-		"h3": "Wall of Love",
+		"h3": "Cerita pelanggan kami",
 		"description1": "如果您使用这个落地页模板并在您的推特上推荐它，",
 		"description2": "请告诉我",
 		"description3": "，我会在这里展示您的推文和推荐。"
 	},
 	"Faq": {
 		"h2": "FAQ",
-		"h3": "常见问题",
+		"h3": "Pertanyaan umum",
 		"description": "以下是一些最常见的问题。"
 	},
 	"CTA": {
