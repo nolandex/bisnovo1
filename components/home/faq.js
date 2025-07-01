@@ -14,7 +14,7 @@ export default function Feature({ locale, langName = 'en' }) {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className='relative z-10 flex flex-col gap-5 items-start mb-10 px-4 md:px-6'>
+        <div className='relative z-10 flex flex-col gap-5 items-start mb-10 px-2 md:px-4'>
           {/* Badge Judul */}
           <div className='relative inline-flex items-center justify-center gap-2 border-2 border-base-content px-5 py-1 rounded-full text-lg md:text-xl font-semibold'>
             <FaQuestionCircle /> <h2>{locale.h2}</h2>
