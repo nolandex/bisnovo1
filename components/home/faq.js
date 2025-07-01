@@ -13,8 +13,8 @@ export default function Feature({ locale, langName = 'en' }) {
 				whileInView={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5 }}
 			>
-				{/* Judul & Subjudul rata kiri */}
-				<div className='relative z-10 flex flex-col gap-3 items-start mb-8 mx-auto text-left w-full max-w-3xl px-4'>
+				{/* Judul & Subjudul lebih ke kiri */}
+				<div className='relative z-10 flex flex-col gap-3 items-start mb-8 text-left w-full max-w-3xl pl-4 pr-8 md:pl-10 md:pr-12'>
 					<div className='inline-flex items-center gap-2 border-2 border-base-content px-4 py-1 rounded-full text-base font-semibold'>
 						<FaQuestionCircle /> <h2>{locale.h2}</h2>
 					</div>
